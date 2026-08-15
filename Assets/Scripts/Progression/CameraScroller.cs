@@ -8,14 +8,28 @@ public class CameraScroller : MonoBehaviour
     [Tooltip("Additional scroll speed per point of difficulty")]
     [SerializeField] private float difficultySpeedMultiplier = 1f;
 
+    [Tooltip("Speed cap. Once reached, stops scaling with difficulty and holds this speed")]
+    [SerializeField] private float maxSpeed = 10f;
+
     private bool isActive;
+    private bool isScaling = true;
+    private float currentSpeed;
 
     private void Update()
     {
         if (!isActive) return;
 
-        float speed = CalculateScrollSpeed(DifficultyManager.Instance.Difficulty);
-        transform.position += Vector3.right * speed * Time.deltaTime;
+        if (isScaling)
+        {
+            currentSpeed = CalculateScrollSpeed(DifficultyManager.Instance.Difficulty);
+            if (currentSpeed >= maxSpeed)
+            {
+                currentSpeed = maxSpeed;
+                isScaling = false;
+            }
+        }
+
+        transform.position += Vector3.right * currentSpeed * Time.deltaTime;
     }
 
     // TEMP: replace with OnGameStart hookup once the start line trigger exists
