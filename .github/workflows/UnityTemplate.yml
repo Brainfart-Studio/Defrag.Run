@@ -69,7 +69,7 @@ jobs:
          name: build-WebGL
          path: build/WebGL
      - name: Publish to Itch.io
-       uses: Oval-Tutu/publish-to-itch-with-butler@v1
+       uses: Oval-Tutu/publish-to-itch-with-butler@1.0.0
        with:
          api-key: ${{ secrets.ITCH_IO_API_KEY }}
          itch_user: ${{ secrets.ITCH_USER }}
