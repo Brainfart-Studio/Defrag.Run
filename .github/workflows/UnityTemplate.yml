@@ -16,6 +16,15 @@ jobs:
    steps:
      - name: Checkout repository
        uses: actions/checkout@v4
+     - name: Free disk space
+       uses: jlumbroso/free-disk-space@main
+       with:
+         tool-cache: false
+         android: true
+         dotnet: true
+         haskell: true
+         large-packages: true
+         swap-storage: true
      - name: Create LFS file list
        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
      - name: Restore LFS cache
