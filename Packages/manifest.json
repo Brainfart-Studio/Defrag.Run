@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "com.bftools.core": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Core",
+    "com.bftools.editortools": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/EditorTools",
+    "com.bftools.feedback": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Feedback",
+    "com.bftools.systems": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Systems",
+    "com.bftools.visuals": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Visuals",
     "com.unity.collab-proxy": "2.12.4",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.ide.rider": "3.0.31",

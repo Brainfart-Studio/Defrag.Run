@@ -1,5 +1,56 @@
 {
   "dependencies": {
+    "com.bftools.core": {
+      "version": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Core",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+      },
+      "hash": "72475d47f6de61a6d025af42b296b71b7380105c"
+    },
+    "com.bftools.editortools": {
+      "version": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/EditorTools",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bftools.core": "1.0.0",
+        "com.bftools.systems": "1.0.0",
+        "com.bftools.feedback": "1.0.0",
+        "com.unity.textmeshpro": "3.0.6",
+        "com.unity.inputsystem": "1.7.0"
+      },
+      "hash": "72475d47f6de61a6d025af42b296b71b7380105c"
+    },
+    "com.bftools.feedback": {
+      "version": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Feedback",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bftools.core": "1.1.0",
+        "com.unity.inputsystem": "1.7.0"
+      },
+      "hash": "72475d47f6de61a6d025af42b296b71b7380105c"
+    },
+    "com.bftools.systems": {
+      "version": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Systems",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bftools.core": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+      },
+      "hash": "72475d47f6de61a6d025af42b296b71b7380105c"
+    },
+    "com.bftools.visuals": {
+      "version": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Visuals",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bftools.core": "1.0.0"
+      },
+      "hash": "72475d47f6de61a6d025af42b296b71b7380105c"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.1",
       "depth": 1,
@@ -161,9 +212,25 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.inputsystem": {
+      "version": "1.7.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
