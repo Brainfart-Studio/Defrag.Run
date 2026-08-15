@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd4f8fe0edacacb49be3ecd8f55ec044, type: 3}
-  m_Name: BFLoggerConfig
+  m_Script: {fileID: 11500000, guid: 768b5e8478d33e54f9f0f2fd5380b550, type: 3}
+  m_Name: Credits
   m_EditorClassIdentifier: 
-  globalMinimumLevel: 3
-  tagLevelOverrides: []
-  useTagAllowlist: 0
-  tagAllowlist: []
-  stackTraceMinimumLevel: 4
+  request:
+    sceneName: Credits
+    loadMode: 0
+    showLoadingScreen: 0
+    minimumDisplayTime: 0

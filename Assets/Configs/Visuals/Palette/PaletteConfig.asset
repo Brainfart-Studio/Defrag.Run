@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd4f8fe0edacacb49be3ecd8f55ec044, type: 3}
-  m_Name: BFLoggerConfig
+  m_Script: {fileID: 11500000, guid: 63597afe7375a5c43af9ab9715067152, type: 3}
+  m_Name: PaletteConfig
   m_EditorClassIdentifier: 
-  globalMinimumLevel: 3
-  tagLevelOverrides: []
-  useTagAllowlist: 0
-  tagAllowlist: []
-  stackTraceMinimumLevel: 4
+  entries: []
