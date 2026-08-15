@@ -69,10 +69,10 @@ jobs:
          name: build-WebGL
          path: build/WebGL
      - name: Publish to Itch.io
-       uses: Oval-Tutu/publish-to-itch-with-butler@1.0.0
+       uses: KikimoraGames/itch-publish@v0.0.3
        with:
-         api-key: ${{ secrets.ITCH_IO_API_KEY }}
-         itch_user: ${{ secrets.ITCH_USER }}
-         itch_game: ${{ secrets.ITCH_GAME }}
-         channel: HTML
-         package: build/WebGL
+         butlerApiKey: ${{ secrets.ITCH_IO_API_KEY }}
+         gameData: build/WebGL
+         itchUsername: ${{ secrets.ITCH_USER }}
+         itchGameId: ${{ secrets.ITCH_GAME }}
+         buildChannel: HTML
