@@ -1,3 +1,4 @@
+using BFTools.Core.EventBus;
 using UnityEngine;
 
 public class DifficultyManager : MonoBehaviour
@@ -14,19 +15,8 @@ public class DifficultyManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         instance = this;
-        DontDestroyOnLoad(transform.root.gameObject);
-    }
-
-    // TEMP: replace with OnGameStart hookup once the start line trigger exists
-    private void Start()
-    {
-        BeginScaling();
+        EventBus<GameStartEvent>.Subscribe(OnGameStart);
     }
 
     private void Update()
@@ -34,7 +24,11 @@ public class DifficultyManager : MonoBehaviour
         if (!isActive) return;
 
         Difficulty = CalculateDifficulty(ScoreManager.Instance.MaxDistance);
-        Debug.Log(Difficulty);
+    }
+
+    private void OnGameStart(GameStartEvent e)
+    {
+        BeginScaling();
     }
 
     private float CalculateDifficulty(float distance)

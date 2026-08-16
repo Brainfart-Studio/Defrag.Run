@@ -1,3 +1,4 @@
+using BFTools.Core.EventBus;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -12,19 +13,8 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         instance = this;
-        DontDestroyOnLoad(transform.root.gameObject);
-    }
-
-    // TEMP: replace with OnGameStart hookup once the start line trigger exists
-    private void Start()
-    {
-        BeginTracking();
+        EventBus<GameStartEvent>.Subscribe(OnGameStart);
     }
 
     private void Update()
@@ -34,8 +24,12 @@ public class ScoreManager : MonoBehaviour
         if (player.position.x > MaxDistance)
         {
             MaxDistance = Mathf.Round(player.position.x);
-            Debug.Log(MaxDistance);
         }
+    }
+
+    private void OnGameStart(GameStartEvent e)
+    {
+        BeginTracking();
     }
 
     public void BeginTracking()

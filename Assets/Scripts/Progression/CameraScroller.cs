@@ -1,3 +1,4 @@
+using BFTools.Core.EventBus;
 using UnityEngine;
 
 public class CameraScroller : MonoBehaviour
@@ -14,6 +15,16 @@ public class CameraScroller : MonoBehaviour
     private bool isActive;
     private bool isScaling = true;
     private float currentSpeed;
+
+    private void Awake()
+    {
+        EventBus<GameStartEvent>.Subscribe(OnGameStart);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStartEvent>.Unsubscribe(OnGameStart);
+    }
 
     private void Update()
     {
@@ -32,8 +43,7 @@ public class CameraScroller : MonoBehaviour
         transform.position += Vector3.right * currentSpeed * Time.deltaTime;
     }
 
-    // TEMP: replace with OnGameStart hookup once the start line trigger exists
-    private void Start()
+    private void OnGameStart(GameStartEvent e)
     {
         BeginScrolling();
     }
