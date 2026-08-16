@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,8 +14,9 @@ public class TileDecayer : MonoBehaviour
 
     private bool isActive;
     private int lastProcessedColumn;
+    private readonly List<Vector3Int> decayedCells = new List<Vector3Int>();
 
-    public event Action<Vector3Int> OnTileDecayed;
+    public event Action<IReadOnlyList<Vector3Int>> OnColumnDecayed;
 
     // TEMP: replace with OnGameStart hookup once the start line trigger exists
     private void Start()
@@ -38,13 +40,23 @@ public class TileDecayer : MonoBehaviour
 
     private void DecayColumn(int column)
     {
+        decayedCells.Clear();
+
+        // Disable colliders and collect every decaying cell in this column first.
+        // The sprite/removal pass runs after this loop so a cleared tile can't
+        // trigger a rule-tile neighbor refresh on a cell we haven't read yet.
         for (int row = rowRangeMin; row <= rowRangeMax; row++)
         {
             Vector3Int cell = new Vector3Int(column, row, 0);
             if (!masterTilemap.HasTile(cell)) continue;
 
             masterTilemap.SetColliderType(cell, Tile.ColliderType.None);
-            OnTileDecayed?.Invoke(cell);
+            decayedCells.Add(cell);
+        }
+
+        if (decayedCells.Count > 0)
+        {
+            OnColumnDecayed?.Invoke(decayedCells);
         }
     }
 
