@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BFTools.Core.EventBus;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,6 +18,16 @@ public class TileDecayer : MonoBehaviour
     private readonly List<Vector3Int> decayedCells = new List<Vector3Int>();
 
     public event Action<IReadOnlyList<Vector3Int>> OnColumnDecayed;
+
+    private void Awake()
+    {
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
 
     // TEMP: replace with OnGameStart hookup once the start line trigger exists
     private void Start()
@@ -38,6 +49,14 @@ public class TileDecayer : MonoBehaviour
         }
     }
 
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState == GameState.Dying)
+        {
+            DecayAll();
+        }
+    }
+
     private void DecayColumn(int column)
     {
         decayedCells.Clear();
@@ -48,6 +67,27 @@ public class TileDecayer : MonoBehaviour
         for (int row = rowRangeMin; row <= rowRangeMax; row++)
         {
             Vector3Int cell = new Vector3Int(column, row, 0);
+            if (!masterTilemap.HasTile(cell)) continue;
+
+            masterTilemap.SetColliderType(cell, Tile.ColliderType.None);
+            decayedCells.Add(cell);
+        }
+
+        if (decayedCells.Count > 0)
+        {
+            OnColumnDecayed?.Invoke(decayedCells);
+        }
+    }
+
+    // Decays every tile currently placed in the tilemap in one pass, on player death.
+    public void DecayAll()
+    {
+        isActive = false;
+        decayedCells.Clear();
+
+        BoundsInt bounds = masterTilemap.cellBounds;
+        foreach (Vector3Int cell in bounds.allPositionsWithin)
+        {
             if (!masterTilemap.HasTile(cell)) continue;
 
             masterTilemap.SetColliderType(cell, Tile.ColliderType.None);
