@@ -6,7 +6,7 @@ Shader "Custom/TileBuild"
         _NoiseTex ("Assembly Noise", 2D) = "white" {}
         _BuildProgress ("Build Progress", Range(0, 1)) = 0
         _AssembleDistance ("Assemble Fall Distance", Float) = 1.5
-        _Scatter ("Horizontal Scatter", Float) = 0.5
+        _Scatter ("Vertical Scatter", Float) = 0.5
         _RightBias ("Right Entry Bias", Float) = 0.4
         _EdgeWidth ("Assembly Edge Width", Range(0.001, 0.5)) = 0.08
         _EdgeColor ("Assembly Edge Glow", Color) = (0, 1, 1, 1)
@@ -72,15 +72,15 @@ Shader "Custom/TileBuild"
                 float settleCurve = 1.0 - pow(1.0 - cellProgress, 3.0);
                 float remaining = 1.0 - settleCurve;
 
-                float dirX = hash(seed * 17.0 + 3.0) * 2.0 - 1.0;
+                float dirY = hash(seed * 17.0 + 3.0) * 2.0 - 1.0;
 
-                // _RightBias is a constant rightward starting offset layered under
-                // the random scatter, so pieces read as flying in from the right
-                // (the direction new world is coming from) rather than converging
-                // evenly from both sides.
+                // _RightBias is a constant, non-random horizontal entry direction
+                // (pieces fly in from the right). _Scatter now jitters the vertical
+                // fall distance per cell instead, so pieces settle from staggered
+                // heights rather than staggered left/right positions.
                 float3 offset = float3(
-                    (dirX * _Scatter + _RightBias) * remaining,
-                    _AssembleDistance * remaining,
+                    _RightBias * remaining,
+                    (_AssembleDistance + dirY * _Scatter) * remaining,
                     0.0
                 );
 
