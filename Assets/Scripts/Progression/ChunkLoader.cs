@@ -54,6 +54,7 @@ public class ChunkLoader : MonoBehaviour
 
         BoundsInt destBounds = new BoundsInt(nextSpawnCellX, sourceBounds.yMin, 0, sourceBounds.size.x, sourceBounds.size.y, 1);
         masterTilemap.SetTilesBlock(destBounds, tiles);
+        HidePendingTiles(destBounds);
 
         List<GameObject> hazardInstances = new List<GameObject>();
         foreach (ChunkHazardMarker marker in chunkPrefab.GetComponentsInChildren<ChunkHazardMarker>(true))
@@ -68,6 +69,21 @@ public class ChunkLoader : MonoBehaviour
 
         activeChunks.Enqueue(new ActiveChunk { tileBounds = destBounds, hazardInstances = hazardInstances });
         nextSpawnCellX += chunkWidth;
+    }
+
+    // Newly placed tiles are real and connected to their neighbors right away
+    // (so rule-tile matching resolves correctly against the previous chunk), but
+    // stay invisible and non-solid until TileBuilder's build line reaches them.
+    private void HidePendingTiles(BoundsInt bounds)
+    {
+        foreach (Vector3Int cell in bounds.allPositionsWithin)
+        {
+            if (!masterTilemap.HasTile(cell)) continue;
+
+            masterTilemap.SetTileFlags(cell, TileFlags.None);
+            masterTilemap.SetColor(cell, Color.clear);
+            masterTilemap.SetColliderType(cell, Tile.ColliderType.None);
+        }
     }
 
     private void UnloadChunk(ActiveChunk chunk)
