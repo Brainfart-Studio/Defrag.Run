@@ -7,6 +7,7 @@ Shader "Custom/TileCrumble"
         _DecayProgress ("Decay Progress", Range(0, 1)) = 0
         _FallDistance ("Fall Distance", Float) = 1.5
         _Scatter ("Horizontal Scatter", Float) = 0.5
+        _BackwardDrift ("Backward Drift", Float) = 0.4
         _EdgeWidth ("Dissolve Edge Width", Range(0.001, 0.5)) = 0.08
         _EdgeColor ("Dissolve Edge Glow", Color) = (0, 1, 1, 1)
     }
@@ -45,6 +46,7 @@ Shader "Custom/TileCrumble"
             float _DecayProgress;
             float _FallDistance;
             float _Scatter;
+            float _BackwardDrift;
             float _EdgeWidth;
             float4 _EdgeColor;
 
@@ -67,8 +69,12 @@ Shader "Custom/TileCrumble"
 
                 float dirX = hash(seed * 17.0 + 3.0) * 2.0 - 1.0;
 
+                // Backward drift is a constant velocity term (moves with cellProgress,
+                // same as the random scatter) layered under gravity's acceleration
+                // (fallCurve) on the vertical axis, so fragments trace a diagonal path
+                // instead of falling straight down.
                 float3 offset = float3(
-                    dirX * _Scatter * cellProgress,
+                    (dirX * _Scatter - _BackwardDrift) * cellProgress,
                     -_FallDistance * fallCurve,
                     0.0
                 );
