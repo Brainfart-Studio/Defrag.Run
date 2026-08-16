@@ -39,9 +39,11 @@ public class DecayFragmentSpawner : MonoBehaviour
     {
         decayedTiles.Clear();
 
-        // Read every sprite before clearing any tile. Clearing one cell triggers
-        // a rule-tile neighbor refresh, so reading after a clear would capture an
-        // already-eroded sprite instead of the tile's true connected appearance.
+        // Read every sprite before hiding any tile. Hiding is a color fade, not a
+        // removal, specifically so it never touches the tile reference itself -
+        // that reference is what neighboring rule tiles check for connectivity,
+        // so leaving it in place keeps the still-solid mass from visually
+        // reshuffling every time a cell next to it decays.
         for (int i = 0; i < cells.Count; i++)
         {
             Vector3Int cell = cells[i];
@@ -55,7 +57,9 @@ public class DecayFragmentSpawner : MonoBehaviour
 
         for (int i = 0; i < decayedTiles.Count; i++)
         {
-            masterTilemap.SetTile(decayedTiles[i].cell, null);
+            Vector3Int cell = decayedTiles[i].cell;
+            masterTilemap.SetTileFlags(cell, TileFlags.None);
+            masterTilemap.SetColor(cell, Color.clear);
         }
 
         for (int i = 0; i < decayedTiles.Count; i++)
