@@ -7,6 +7,7 @@ Shader "Custom/TileBuild"
         _BuildProgress ("Build Progress", Range(0, 1)) = 0
         _AssembleDistance ("Assemble Fall Distance", Float) = 1.5
         _Scatter ("Horizontal Scatter", Float) = 0.5
+        _RightBias ("Right Entry Bias", Float) = 0.4
         _EdgeWidth ("Assembly Edge Width", Range(0.001, 0.5)) = 0.08
         _EdgeColor ("Assembly Edge Glow", Color) = (0, 1, 1, 1)
     }
@@ -45,6 +46,7 @@ Shader "Custom/TileBuild"
             float _BuildProgress;
             float _AssembleDistance;
             float _Scatter;
+            float _RightBias;
             float _EdgeWidth;
             float4 _EdgeColor;
 
@@ -72,10 +74,12 @@ Shader "Custom/TileBuild"
 
                 float dirX = hash(seed * 17.0 + 3.0) * 2.0 - 1.0;
 
-                // Positive Y: cells start above their assembled position and drop
-                // down into place, the inverse of the crumble shader's downward fall.
+                // _RightBias is a constant rightward starting offset layered under
+                // the random scatter, so pieces read as flying in from the right
+                // (the direction new world is coming from) rather than converging
+                // evenly from both sides.
                 float3 offset = float3(
-                    dirX * _Scatter * remaining,
+                    (dirX * _Scatter + _RightBias) * remaining,
                     _AssembleDistance * remaining,
                     0.0
                 );
