@@ -13,14 +13,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         instance = this;
-        DontDestroyOnLoad(transform.root.gameObject);
-
         EventBus<GameStartEvent>.Subscribe(OnGameStart);
     }
 
