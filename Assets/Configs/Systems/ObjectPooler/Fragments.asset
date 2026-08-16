@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 390be68bf24f004498480b4ca1830697, type: 3}
-  m_Name: DecayFragment
+  m_Name: Fragments
   m_EditorClassIdentifier: 
   poolEntries:
   - key: DecayFragment
+    prefab: {fileID: 9179482983531802443, guid: 560bea32cf1e6e443a3b229f87bdda30, type: 3}
+    prewarmCount: 100
+  - key: BuildFragment
     prefab: {fileID: 9179482983531802443, guid: 560bea32cf1e6e443a3b229f87bdda30, type: 3}
     prewarmCount: 100
