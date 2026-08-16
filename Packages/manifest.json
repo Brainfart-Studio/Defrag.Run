@@ -5,6 +5,7 @@
     "com.bftools.feedback": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Feedback",
     "com.bftools.systems": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Systems",
     "com.bftools.visuals": "https://github.com/Brainfart-Studio/BF-Tools.git?path=Packages/Visuals",
+    "com.brainfartstudio.autotile": "https://github.com/MitchellOpitz/Automatic-Rule-Tile-Generator.git",
     "com.unity.collab-proxy": "2.12.4",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.ide.rider": "3.0.31",
