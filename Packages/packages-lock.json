@@ -51,6 +51,13 @@
       },
       "hash": "72475d47f6de61a6d025af42b296b71b7380105c"
     },
+    "com.brainfartstudio.autotile": {
+      "version": "https://github.com/MitchellOpitz/Automatic-Rule-Tile-Generator.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "241f667b6d2547ccbfcabbb3f312f7a709108982"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.1",
       "depth": 1,
