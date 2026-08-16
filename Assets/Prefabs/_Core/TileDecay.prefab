@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8955868257280072922}
   - component: {fileID: 6908754236129344490}
   - component: {fileID: 8624830327215930087}
+  - component: {fileID: -161700180375729168}
   m_Layer: 0
   m_Name: TileDecay
   m_TagString: Untagged
@@ -62,3 +63,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterTilemap: {fileID: 0}
+--- !u!114 &-161700180375729168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7461708192445757063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68e3baec00b5aa42826a253f8119691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraScroller: {fileID: 0}
+  crumbleMaterial: {fileID: 2100000, guid: 31cf3e3e1774d11498d2572453ccb3be, type: 2}
+  driftScale: 1

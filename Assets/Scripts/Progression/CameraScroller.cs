@@ -16,6 +16,8 @@ public class CameraScroller : MonoBehaviour
     private bool isScaling = true;
     private float currentSpeed;
 
+    public float CurrentSpeed => currentSpeed;
+
     private void Awake()
     {
         EventBus<GameStartEvent>.Subscribe(OnGameStart);
