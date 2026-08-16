@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolEntries:
   - key: DecayFragment
-    prefab: {fileID: 0}
+    prefab: {fileID: 9179482983531802443, guid: 560bea32cf1e6e443a3b229f87bdda30, type: 3}
     prewarmCount: 12
