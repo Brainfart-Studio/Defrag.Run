@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        InputManager.Instance.EnableGameplay();
         EventBus<PlayerDeathEvent>.Subscribe(OnPlayerDeath);
     }
 
