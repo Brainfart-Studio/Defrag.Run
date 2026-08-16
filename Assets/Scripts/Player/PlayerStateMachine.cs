@@ -1,3 +1,4 @@
+using BFTools.Core.EventBus;
 using UnityEngine;
 
 public class PlayerStateMachine : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerStateMachine : MonoBehaviour
     private PlayerState jumpState;
     private PlayerState dashState;
 
+    private bool isFrozen;
+
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
@@ -22,15 +25,24 @@ public class PlayerStateMachine : MonoBehaviour
         dashState = new DashState(controller, this);
 
         ChangeState(fallState);
+
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
     }
 
     private void Update()
     {
+        if (isFrozen) return;
         currentState?.Update();
     }
 
     private void FixedUpdate()
     {
+        if (isFrozen) return;
         currentState?.FixedUpdate();
     }
 
@@ -41,6 +53,14 @@ public class PlayerStateMachine : MonoBehaviour
         currentState?.Exit();
         currentState = newState;
         currentState.Enter();
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        isFrozen = true;
+        controller.GetRigidbody().velocity = Vector2.zero;
     }
 
     // Expose preallocated states for transitions
