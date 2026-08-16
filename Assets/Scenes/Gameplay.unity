@@ -1331,6 +1331,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileDecay
       objectReference: {fileID: 0}
+    - target: {fileID: 8624830327215930087, guid: 2944d2d5dc94d01479d0373eb19eb15c, type: 3}
+      propertyPath: masterTilemap
+      value: 
+      objectReference: {fileID: 1991493384}
     - target: {fileID: 8955868257280072922, guid: 2944d2d5dc94d01479d0373eb19eb15c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
