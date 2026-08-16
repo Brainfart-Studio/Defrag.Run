@@ -770,7 +770,7 @@ PrefabInstance:
     - target: {fileID: 1302642668175973941, guid: d5e8d88b9cf4eba4f8a698b7328d4a89, type: 3}
       propertyPath: config
       value: 
-      objectReference: {fileID: 11400000, guid: 833cd7c73a8ef5c4db8235e65de79e70, type: 2}
+      objectReference: {fileID: 11400000, guid: b6246b803a4599641a2a4a5e0e2ff6c6, type: 2}
     - target: {fileID: 7209180663736601478, guid: d5e8d88b9cf4eba4f8a698b7328d4a89, type: 3}
       propertyPath: m_Name
       value: ObjectPooler
@@ -1331,6 +1331,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileDecay
       objectReference: {fileID: 0}
+    - target: {fileID: 8624830327215930087, guid: 2944d2d5dc94d01479d0373eb19eb15c, type: 3}
+      propertyPath: masterTilemap
+      value: 
+      objectReference: {fileID: 1991493384}
     - target: {fileID: 8955868257280072922, guid: 2944d2d5dc94d01479d0373eb19eb15c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
