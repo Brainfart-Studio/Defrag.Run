@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a92d66eace9caa3429b523f21ac9ef69, type: 3}
-  m_Name: GradientLayerConfig
+  m_Name: BackGradientLayerConfig
   m_EditorClassIdentifier: 
   colorGradient:
     serializedVersion: 2
-    key0: {r: 0.039, g: 0.047, b: 0.118, a: 1}
-    key1: {r: 0.016, g: 0.024, b: 0.067, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.019607844, g: 0.019607844, b: 0.02745098, a: 1}
+    key1: {r: 0.039215688, g: 0.039215688, b: 0.05882353, a: 1}
+    key2: {r: 0.0627451, g: 0.0627451, b: 0.14117648, a: 0}
+    key3: {r: 0.019607844, g: 0.019607844, b: 0.03137255, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
+    ctime1: 20312
+    ctime2: 33726
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -40,18 +40,18 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 2
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   midpoint: 0.5
-  spread: 0.5
-  angle: 0
+  spread: 0.105
+  angle: 90
   shiftSpeed: 0
   shiftAmplitude: 0
   rotationSpeed: 0
   rotationOscillationSpeed: 0
   rotationOscillationAmplitude: 0
   waveAmplitude: 0
-  waveFrequency: 2
+  waveFrequency: 0
   waveFrequencyOscillationSpeed: 0
   waveFrequencyOscillationAmplitude: 0
   waveAmplitudeRandomness: 0
