@@ -25,6 +25,6 @@ public class JumpState : PlayerState
     public override void FixedUpdate()
     {
         controller.Move(controller.GetInputHandler().Movement.x);
-        controller.ApplyEarlyFallMultiplier();
+        controller.ApplyVariableJump();
     }
 }

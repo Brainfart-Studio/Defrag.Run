@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BFTools.Core.EventBus;
 using BFTools.Core.ServiceLocator;
 using BFTools.Systems.ObjectPooler;
 using UnityEngine;
@@ -23,6 +24,17 @@ public class ChunkLoader : MonoBehaviour
     private BFObjectPooler pooler;
     private readonly Queue<ActiveChunk> activeChunks = new Queue<ActiveChunk>();
     private int nextSpawnCellX;
+    private bool isActive = true;
+
+    private void Awake()
+    {
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
 
     private void Start()
     {
@@ -32,6 +44,8 @@ public class ChunkLoader : MonoBehaviour
 
     private void Update()
     {
+        if (!isActive) return;
+
         while (nextSpawnCellX < masterTilemap.WorldToCell(spawnBoundary.position).x)
         {
             SpawnChunk();
@@ -42,6 +56,13 @@ public class ChunkLoader : MonoBehaviour
         {
             UnloadChunk(activeChunks.Dequeue());
         }
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        isActive = false;
     }
 
     private void SpawnChunk()

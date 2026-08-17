@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private float jumpBufferCounter;
     private float coyoteCounter;
+    private float varJumpCounter;
     private bool jumpConsumed;
     private int playerDirection = 1;
 
@@ -50,7 +51,10 @@ public class PlayerController : MonoBehaviour
         if (isDashing) return;
 
         float speedMultiplier = GetApexSpeedBoost();
-        rb.velocity = new Vector2(moveInputX * config.runSpeed * speedMultiplier, rb.velocity.y);
+        float targetSpeed = moveInputX * config.runSpeed * speedMultiplier;
+        float accel = config.runAccel * (IsGrounded ? 1f : config.airMult);
+        float newSpeedX = Mathf.MoveTowards(rb.velocity.x, targetSpeed, accel * Time.fixedDeltaTime);
+        rb.velocity = new Vector2(newSpeedX, rb.velocity.y);
         UpdatePlayerDirection(moveInputX);
     }
 
@@ -102,6 +106,7 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, config.jumpForce);
+        varJumpCounter = config.varJumpTime;
     }
 
     public void ConsumeJump()
@@ -144,11 +149,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ApplyEarlyFallMultiplier()
+    // While held within varJumpTime of leaving the ground, keeps velocity from dropping
+    // below launch speed - gravity is effectively paused rather than scaled, so releasing
+    // early cuts the jump short immediately instead of just falling a bit faster.
+    public void ApplyVariableJump()
     {
-        if (!inputHandler.IsJumpHeld() && rb.velocity.y > 0)
+        if (varJumpCounter <= 0f) return;
+
+        if (inputHandler.IsJumpHeld())
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * config.earlyFallMultiplier);
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, config.jumpForce));
+            varJumpCounter -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            varJumpCounter = 0f;
         }
     }
     #endregion
