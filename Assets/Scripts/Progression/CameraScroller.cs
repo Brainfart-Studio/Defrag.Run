@@ -21,11 +21,13 @@ public class CameraScroller : MonoBehaviour
     private void Awake()
     {
         EventBus<GameStartEvent>.Subscribe(OnGameStart);
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
     }
 
     private void OnDestroy()
     {
         EventBus<GameStartEvent>.Unsubscribe(OnGameStart);
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
     }
 
     private void Update()
@@ -48,6 +50,13 @@ public class CameraScroller : MonoBehaviour
     private void OnGameStart(GameStartEvent e)
     {
         BeginScrolling();
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        isActive = false;
     }
 
     private float CalculateScrollSpeed(float difficulty)
