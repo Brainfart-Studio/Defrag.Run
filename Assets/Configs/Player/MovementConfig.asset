@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3406ce9277de56448b4176e6580798a5, type: 3}
   m_Name: MovementConfig
   m_EditorClassIdentifier: 
-  runSpeed: 6
-  gravity: -35
-  maxFallSpeed: -18
-  groundDrag: 14
+  runSpeed: 11
+  runAccel: 125
+  airMult: 0.65
+  gravity: -112
+  maxFallSpeed: -20
+  groundDrag: 8
   jumpForce: 13
   jumpBufferTime: 0.1
   coyoteTime: 0.1
-  earlyFallMultiplier: 0.4
-  apexGravityMultiplier: 0.35
-  apexThreshold: 0.35
-  apexSpeedMultiplier: 1.3
-  dashSpeed: 22
+  varJumpTime: 0.2
+  apexGravityMultiplier: 0.5
+  apexThreshold: 5
+  apexSpeedMultiplier: 1.2
+  dashSpeed: 30
   dashDuration: 0.15
   dashCooldown: 0.2
   maxDashes: 1
