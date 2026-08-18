@@ -19,3 +19,6 @@ MonoBehaviour:
   - key: BuildFragment
     prefab: {fileID: 9179482983531802443, guid: 7c1f96c309406e243ab359c81c831faa, type: 3}
     prewarmCount: 100
+  - key: Spike
+    prefab: {fileID: 7498287049124879578, guid: 1f4de65df21a60e46b1021eb8ad6e570, type: 3}
+    prewarmCount: 10
