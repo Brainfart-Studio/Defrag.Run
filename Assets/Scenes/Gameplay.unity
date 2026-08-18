@@ -6782,6 +6782,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: tileBuilder
+      value: 
+      objectReference: {fileID: 1575838497}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
       propertyPath: masterTilemap
       value: 
       objectReference: {fileID: 1991493384}

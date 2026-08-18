@@ -13,16 +13,31 @@ public class ChunkLoader : MonoBehaviour
         public List<GameObject> hazardInstances;
     }
 
+    // Not spawned yet - a chunk's hazard markers land here at chunk-spawn time and
+    // only turn into a pooled instance once the build line reaches their column,
+    // via HandleColumnBuilding. targetList is the owning chunk's hazardInstances
+    // list (a reference, so appending to it after the chunk's already been
+    // enqueued still reaches the same ActiveChunk for release on unload).
+    private struct PendingHazard
+    {
+        public int column;
+        public string poolKey;
+        public Vector3 spawnPosition;
+        public List<GameObject> targetList;
+    }
+
     [SerializeField] private List<GameObject> chunkPrefabs;
     [SerializeField] private Tilemap masterTilemap;
     [SerializeField] private Transform spawnBoundary;
     [SerializeField] private Transform unloadBoundary;
+    [SerializeField] private TileBuilder tileBuilder;
 
     [Tooltip("Uniform chunk width in cells/units")]
     [SerializeField] private int chunkWidth = 20;
 
     private BFObjectPooler pooler;
     private readonly Queue<ActiveChunk> activeChunks = new Queue<ActiveChunk>();
+    private readonly List<PendingHazard> pendingHazards = new List<PendingHazard>();
     private int nextSpawnCellX;
     private bool isActive = true;
 
@@ -34,6 +49,16 @@ public class ChunkLoader : MonoBehaviour
     private void OnDestroy()
     {
         EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
+
+    private void OnEnable()
+    {
+        tileBuilder.OnColumnBuilding += HandleColumnBuilding;
+    }
+
+    private void OnDisable()
+    {
+        tileBuilder.OnColumnBuilding -= HandleColumnBuilding;
     }
 
     private void Start()
@@ -82,14 +107,42 @@ public class ChunkLoader : MonoBehaviour
         {
             Vector3 localOffset = chunkPrefab.transform.InverseTransformPoint(marker.transform.position);
             Vector3 spawnPosition = new Vector3(nextSpawnCellX + localOffset.x, localOffset.y, 0f);
+            int column = masterTilemap.WorldToCell(spawnPosition).x;
 
-            GameObject instance = pooler.Get(marker.PoolKey);
-            instance.transform.position = spawnPosition;
-            hazardInstances.Add(instance);
+            pendingHazards.Add(new PendingHazard
+            {
+                column = column,
+                poolKey = marker.PoolKey,
+                spawnPosition = spawnPosition,
+                targetList = hazardInstances
+            });
         }
 
         activeChunks.Enqueue(new ActiveChunk { tileBounds = destBounds, hazardInstances = hazardInstances });
         nextSpawnCellX += chunkWidth;
+    }
+
+    // Mirrors the build line reaching a column of tiles: any hazard marker queued
+    // for that same column spawns now instead of at chunk-spawn time, so a spike
+    // never appears (or becomes lethal) ahead of the world actually assembling
+    // around it.
+    private void HandleColumnBuilding(IReadOnlyList<Vector3Int> cells)
+    {
+        if (cells.Count == 0) return;
+
+        int column = cells[0].x;
+
+        for (int i = pendingHazards.Count - 1; i >= 0; i--)
+        {
+            PendingHazard pending = pendingHazards[i];
+            if (pending.column != column) continue;
+
+            GameObject instance = pooler.Get(pending.poolKey);
+            instance.transform.position = pending.spawnPosition;
+            pending.targetList.Add(instance);
+
+            pendingHazards.RemoveAt(i);
+        }
     }
 
     // Newly placed tiles are real and connected to their neighbors right away
