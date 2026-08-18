@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OrientationBlockerUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject panelRoot;
+
+    private void Awake()
     {
-        
+        OrientationDetector.OnOrientationChanged += HandleOrientationChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        OrientationDetector.OnOrientationChanged -= HandleOrientationChanged;
+    }
+
+    private void Start()
+    {
+        SetBlocked(MobileDetector.IsMobile() && OrientationDetector.Instance.IsCurrentlyPortrait());
+    }
+
+    private void HandleOrientationChanged(bool isPortrait)
+    {
+        SetBlocked(MobileDetector.IsMobile() && isPortrait);
+    }
+
+    private void SetBlocked(bool isBlocked)
+    {
+        panelRoot.SetActive(isBlocked);
+        Time.timeScale = isBlocked ? 0f : 1f;
     }
 }
