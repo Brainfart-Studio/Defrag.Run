@@ -5,7 +5,6 @@ on:
       - main
       - development
       - feat/cicd
-      - feat/mobile-support
 permissions:
   contents: write
 jobs:         
@@ -76,4 +75,4 @@ jobs:
          gameData: build/WebGL
          itchUsername: ${{ secrets.ITCH_USER }}
          itchGameId: ${{ secrets.ITCH_GAME }}
-         buildChannel: mobile-test
+         buildChannel: HTML
