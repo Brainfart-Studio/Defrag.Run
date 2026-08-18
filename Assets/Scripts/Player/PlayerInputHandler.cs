@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    [SerializeField] private TouchJoystick touchJoystick;
+    [SerializeField] private TouchButton touchJumpButton;
+    [SerializeField] private TouchButton touchDashButton;
+
     private InputAction move;
     private InputAction jump;
     private InputAction dash;
@@ -19,11 +23,19 @@ public class PlayerInputHandler : MonoBehaviour
 
         jump.performed += _ => JumpedThisFrame = true;
         dash.performed += _ => DashedThisFrame = true;
+
+        if (MobileDetector.IsMobile())
+        {
+            touchJumpButton.OnPressed += () => JumpedThisFrame = true;
+            touchDashButton.OnPressed += () => DashedThisFrame = true;
+        }
     }
 
     private void Update()
     {
-        Movement = move?.ReadValue<Vector2>() ?? Vector2.zero;
+        Movement = MobileDetector.IsMobile()
+            ? touchJoystick.Direction
+            : move?.ReadValue<Vector2>() ?? Vector2.zero;
     }
 
     public void ResetJumpFlag()
@@ -36,5 +48,6 @@ public class PlayerInputHandler : MonoBehaviour
         DashedThisFrame = false;
     }
 
-    public bool IsJumpHeld() => jump?.IsPressed() ?? false;
+    // Touch jump has no held state, so early-fall shortening only applies to keyboard/gamepad jumps
+    public bool IsJumpHeld() => !MobileDetector.IsMobile() && (jump?.IsPressed() ?? false);
 }
