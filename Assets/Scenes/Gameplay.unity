@@ -666,6 +666,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 946574013807223103, guid: 66d49ab5b2515b8488b5893a41121487, type: 3}
+      propertyPath: colorSampler
+      value: 
+      objectReference: {fileID: 475220893}
     - target: {fileID: 1380439973207458303, guid: 66d49ab5b2515b8488b5893a41121487, type: 3}
       propertyPath: touchJoystick
       value: 
@@ -682,6 +686,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4220835088306305095, guid: 66d49ab5b2515b8488b5893a41121487, type: 3}
+      propertyPath: targetCameraOverride
+      value: 
+      objectReference: {fileID: 1463326003}
     - target: {fileID: 8384310812167812768, guid: 66d49ab5b2515b8488b5893a41121487, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11
@@ -727,6 +735,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66d49ab5b2515b8488b5893a41121487, type: 3}
+--- !u!114 &475220893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4220835088306305095, guid: 66d49ab5b2515b8488b5893a41121487, type: 3}
+  m_PrefabInstance: {fileID: 475220892}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da1a64d01f941df4f98b0915a322e78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &585697132
 GameObject:
   m_ObjectHideFlags: 0
