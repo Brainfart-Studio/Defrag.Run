@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HitstopConfig
   m_EditorClassIdentifier: 
   entries:
-  - eventName: Default
-    timescale: 0.05
-    duration: 0.15
+  - eventName: Death
+    timescale: 0.02
+    duration: 0.12

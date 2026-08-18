@@ -1,5 +1,6 @@
 using BFTools.Core.EventBus;
 using BFTools.Feedback.Haptics;
+using BFTools.Feedback.Hitstop;
 using BFTools.Feedback.Vignette;
 using UnityEngine;
 
@@ -34,5 +35,6 @@ public class PlayerFeedbackTrigger : MonoBehaviour
     {
         EventBus<BFHapticsEvent>.Fire(new BFHapticsEvent { eventName = "Death" });
         EventBus<BFVignetteEvent>.Fire(new BFVignetteEvent { eventName = "Death" });
+        EventBus<BFHitstopEvent>.Fire(new BFHitstopEvent { eventName = "Death" });
     }
 }
