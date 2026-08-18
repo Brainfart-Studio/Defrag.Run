@@ -1,5 +1,6 @@
 using System.Collections;
 using BFTools.Core.EventBus;
+using BFTools.Feedback.ScreenFlash;
 using UnityEngine;
 
 public enum GameState
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerDeath(PlayerDeathEvent e)
     {
+        EventBus<BFScreenFlashEvent>.Fire(new BFScreenFlashEvent { eventName = "Death" });
         ChangeState(GameState.Dying);
         StartCoroutine(EndDeathSequence());
     }

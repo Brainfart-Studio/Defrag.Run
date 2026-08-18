@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ScreenFlashConfig
   m_EditorClassIdentifier: 
   entries:
-  - eventName: Default
-    flashColor: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0.15
+  - eventName: Death
+    flashColor: {r: 1, g: 0, b: 0.1, a: 1}
+    duration: 0.2
     flashCount: 1
