@@ -1,8 +1,9 @@
 using BFTools.Core.EventBus;
 using BFTools.Feedback.Haptics;
+using BFTools.Feedback.Vignette;
 using UnityEngine;
 
-public class PlayerHapticsTrigger : MonoBehaviour
+public class PlayerFeedbackTrigger : MonoBehaviour
 {
     private void OnEnable()
     {
@@ -21,6 +22,7 @@ public class PlayerHapticsTrigger : MonoBehaviour
     private void OnPlayerDashed(PlayerDashedEvent e)
     {
         EventBus<BFHapticsEvent>.Fire(new BFHapticsEvent { eventName = "Dash" });
+        EventBus<BFVignetteEvent>.Fire(new BFVignetteEvent { eventName = "Dash" });
     }
 
     private void OnPlayerLanded(PlayerLandedEvent e)
@@ -31,5 +33,6 @@ public class PlayerHapticsTrigger : MonoBehaviour
     private void OnPlayerDeath(PlayerDeathEvent e)
     {
         EventBus<BFHapticsEvent>.Fire(new BFHapticsEvent { eventName = "Death" });
+        EventBus<BFVignetteEvent>.Fire(new BFVignetteEvent { eventName = "Death" });
     }
 }

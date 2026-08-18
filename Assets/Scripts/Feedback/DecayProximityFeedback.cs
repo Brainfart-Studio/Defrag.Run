@@ -1,8 +1,9 @@
 using BFTools.Core.EventBus;
 using BFTools.Feedback.Haptics;
+using BFTools.Feedback.Vignette;
 using UnityEngine;
 
-public class DecayProximityHaptics : MonoBehaviour
+public class DecayProximityFeedback : MonoBehaviour
 {
     [Tooltip("Player to measure distance to")]
     [SerializeField] private Transform player;
@@ -37,6 +38,7 @@ public class DecayProximityHaptics : MonoBehaviour
         if (pulseTimer > 0f) return;
 
         EventBus<BFHapticsEvent>.Fire(new BFHapticsEvent { eventName = "DecayWarning" });
+        EventBus<BFVignetteEvent>.Fire(new BFVignetteEvent { eventName = "DecayWarning" });
 
         float t = Mathf.InverseLerp(maxDistance, minDistance, distance);
         pulseTimer = Mathf.Lerp(maxPulseInterval, minPulseInterval, t);
