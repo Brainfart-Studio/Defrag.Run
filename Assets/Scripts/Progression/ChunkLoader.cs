@@ -28,11 +28,14 @@ public class ChunkLoader : MonoBehaviour
 
     // A hazard that's already spawned and pooled, tracked by column so a decayed
     // column can find and disable its collider - mirrors TileDecayer disabling a
-    // tile's collider ahead of its visual removal.
+    // tile's collider ahead of its visual removal. renderer/collider are cached
+    // at spawn time so the build/decay steps don't need to GetComponent again.
     private struct ActiveHazard
     {
         public int column;
         public GameObject instance;
+        public SpriteRenderer renderer;
+        public Collider2D collider;
     }
 
     [SerializeField] private List<GameObject> chunkPrefabs;
@@ -154,16 +157,52 @@ public class ChunkLoader : MonoBehaviour
             GameObject instance = pooler.Get(pending.poolKey);
             instance.transform.position = pending.spawnPosition;
             pending.targetList.Add(instance);
-            activeHazards.Add(new ActiveHazard { column = column, instance = instance });
+
+            instance.TryGetComponent(out SpriteRenderer renderer);
+            instance.TryGetComponent(out Collider2D collider);
+            activeHazards.Add(new ActiveHazard { column = column, instance = instance, renderer = renderer, collider = collider });
+
+            BeginHazardBuild(pending.spawnPosition, renderer, collider);
 
             pendingHazards.RemoveAt(i);
         }
+    }
+
+    // Hides the real hazard and plays the same assembly shader tiles use at this
+    // position, revealing (and re-enabling its collider) only once that fragment
+    // finishes - identical timing rule to BuildFragmentSpawner.RevealTile.
+    private void BeginHazardBuild(Vector3 worldPosition, SpriteRenderer renderer, Collider2D collider)
+    {
+        if (renderer == null || renderer.sprite == null)
+        {
+            if (collider != null) collider.enabled = true;
+            return;
+        }
+
+        renderer.enabled = false;
+        if (collider != null) collider.enabled = false;
+
+        GameObject fragment = pooler.Get(BuildFragmentController.PoolKey);
+        if (fragment == null)
+        {
+            renderer.enabled = true;
+            if (collider != null) collider.enabled = true;
+            return;
+        }
+
+        fragment.GetComponent<BuildFragmentController>().Begin(renderer.sprite, worldPosition, () =>
+        {
+            renderer.enabled = true;
+            if (collider != null) collider.enabled = true;
+        });
     }
 
     // Mirrors TileDecayer disabling a tile's collider ahead of its visual removal -
     // a hazard sitting in a decayed column shouldn't stay lethal/solid after the
     // ground under it is already gone. DecayAll (on player death) reports every
     // decayed column in one call, not just the latest one, hence the column set.
+    // The hazard's sprite is hidden the same way a decayed tile's is, with the
+    // same crumble shader played in its place.
     private void HandleColumnDecayed(IReadOnlyList<Vector3Int> cells)
     {
         if (cells.Count == 0) return;
@@ -176,12 +215,23 @@ public class ChunkLoader : MonoBehaviour
 
         for (int i = 0; i < activeHazards.Count; i++)
         {
-            if (!decayedColumnsScratch.Contains(activeHazards[i].column)) continue;
+            ActiveHazard hazard = activeHazards[i];
+            if (!decayedColumnsScratch.Contains(hazard.column)) continue;
 
-            if (activeHazards[i].instance.TryGetComponent(out Collider2D collider))
-            {
-                collider.enabled = false;
-            }
+            if (hazard.collider != null) hazard.collider.enabled = false;
+
+            if (hazard.renderer == null || !hazard.renderer.enabled) continue;
+
+            Vector3 worldPosition = hazard.instance.transform.position;
+            Sprite sprite = hazard.renderer.sprite;
+            hazard.renderer.enabled = false;
+
+            if (sprite == null) continue;
+
+            GameObject fragment = pooler.Get(DecayFragmentController.PoolKey);
+            if (fragment == null) continue;
+
+            fragment.GetComponent<DecayFragmentController>().Begin(sprite, worldPosition);
         }
     }
 
