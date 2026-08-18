@@ -26,11 +26,21 @@ public class ChunkLoader : MonoBehaviour
         public List<GameObject> targetList;
     }
 
+    // A hazard that's already spawned and pooled, tracked by column so a decayed
+    // column can find and disable its collider - mirrors TileDecayer disabling a
+    // tile's collider ahead of its visual removal.
+    private struct ActiveHazard
+    {
+        public int column;
+        public GameObject instance;
+    }
+
     [SerializeField] private List<GameObject> chunkPrefabs;
     [SerializeField] private Tilemap masterTilemap;
     [SerializeField] private Transform spawnBoundary;
     [SerializeField] private Transform unloadBoundary;
     [SerializeField] private TileBuilder tileBuilder;
+    [SerializeField] private TileDecayer tileDecayer;
 
     [Tooltip("Uniform chunk width in cells/units")]
     [SerializeField] private int chunkWidth = 20;
@@ -38,6 +48,8 @@ public class ChunkLoader : MonoBehaviour
     private BFObjectPooler pooler;
     private readonly Queue<ActiveChunk> activeChunks = new Queue<ActiveChunk>();
     private readonly List<PendingHazard> pendingHazards = new List<PendingHazard>();
+    private readonly List<ActiveHazard> activeHazards = new List<ActiveHazard>();
+    private readonly HashSet<int> decayedColumnsScratch = new HashSet<int>();
     private int nextSpawnCellX;
     private bool isActive = true;
 
@@ -54,11 +66,13 @@ public class ChunkLoader : MonoBehaviour
     private void OnEnable()
     {
         tileBuilder.OnColumnBuilding += HandleColumnBuilding;
+        tileDecayer.OnColumnDecayed += HandleColumnDecayed;
     }
 
     private void OnDisable()
     {
         tileBuilder.OnColumnBuilding -= HandleColumnBuilding;
+        tileDecayer.OnColumnDecayed -= HandleColumnDecayed;
     }
 
     private void Start()
@@ -140,8 +154,34 @@ public class ChunkLoader : MonoBehaviour
             GameObject instance = pooler.Get(pending.poolKey);
             instance.transform.position = pending.spawnPosition;
             pending.targetList.Add(instance);
+            activeHazards.Add(new ActiveHazard { column = column, instance = instance });
 
             pendingHazards.RemoveAt(i);
+        }
+    }
+
+    // Mirrors TileDecayer disabling a tile's collider ahead of its visual removal -
+    // a hazard sitting in a decayed column shouldn't stay lethal/solid after the
+    // ground under it is already gone. DecayAll (on player death) reports every
+    // decayed column in one call, not just the latest one, hence the column set.
+    private void HandleColumnDecayed(IReadOnlyList<Vector3Int> cells)
+    {
+        if (cells.Count == 0) return;
+
+        decayedColumnsScratch.Clear();
+        for (int i = 0; i < cells.Count; i++)
+        {
+            decayedColumnsScratch.Add(cells[i].x);
+        }
+
+        for (int i = 0; i < activeHazards.Count; i++)
+        {
+            if (!decayedColumnsScratch.Contains(activeHazards[i].column)) continue;
+
+            if (activeHazards[i].instance.TryGetComponent(out Collider2D collider))
+            {
+                collider.enabled = false;
+            }
         }
     }
 
@@ -168,6 +208,14 @@ public class ChunkLoader : MonoBehaviour
         foreach (GameObject hazard in chunk.hazardInstances)
         {
             pooler.Release(hazard);
+
+            for (int i = activeHazards.Count - 1; i >= 0; i--)
+            {
+                if (activeHazards[i].instance != hazard) continue;
+
+                activeHazards.RemoveAt(i);
+                break;
+            }
         }
     }
 }
