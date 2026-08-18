@@ -1682,7 +1682,7 @@ GameObject:
   - component: {fileID: 1019744591}
   - component: {fileID: 1019744590}
   m_Layer: 0
-  m_Name: PlayerHapticsTrigger
+  m_Name: PlayerFeedbackTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
