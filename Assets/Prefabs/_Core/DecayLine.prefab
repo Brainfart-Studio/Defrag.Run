@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4424089050980525680}
   - component: {fileID: 3375685007495118209}
   - component: {fileID: 874980654738844}
+  - component: {fileID: 8006889344928822907}
   m_Layer: 0
   m_Name: DecayLine
   m_TagString: Untagged
@@ -174,3 +175,20 @@ MonoBehaviour:
   baseSpeed: 3
   difficultySpeedMultiplier: 1.01
   maxSpeed: 10
+--- !u!114 &8006889344928822907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3000761864341792658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5404f938a87e8c54f9b8c77028eacd2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  maxDistance: 4
+  minDistance: 1
+  maxPulseInterval: 1
+  minPulseInterval: 0.2
