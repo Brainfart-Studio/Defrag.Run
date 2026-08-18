@@ -1,4 +1,7 @@
+using BFTools.Core.EventBus;
 using UnityEngine;
+
+public struct PlayerDashedEvent { }
 
 public class PlayerController : MonoBehaviour
 {
@@ -218,6 +221,8 @@ public class PlayerController : MonoBehaviour
         rb.velocity = direction * config.dashSpeed;
         dashTimeRemaining = config.dashDuration;
         isDashing = true;
+
+        EventBus<PlayerDashedEvent>.Fire(new PlayerDashedEvent());
     }
 
     public void ConsumeDash()

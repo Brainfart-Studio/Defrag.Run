@@ -35,7 +35,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8947062946814781943}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1177953960555544863
@@ -189,6 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d99418159f06e4c91ae0514e44df89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchJoystick: {fileID: 0}
+  touchJumpButton: {fileID: 0}
+  touchDashButton: {fileID: 0}
 --- !u!114 &3517861547433831186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +210,7 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckRadius: 0.2
   groundCheckOffset: {x: 0, y: -0.5}
+  minLandingFallSpeed: 3
 --- !u!114 &1063703601945901268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +223,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9688d335fb66c5468ec8f448ba15eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3601176788466853463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8947062946814781943}
+  - component: {fileID: 946574013807223103}
+  - component: {fileID: 4220835088306305095}
+  m_Layer: 0
+  m_Name: ColorFeeder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8947062946814781943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601176788466853463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8384310812167812768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &946574013807223103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601176788466853463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007982583dd7c104b9f7df7970a2fe02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorSampler: {fileID: 0}
+  ledManager: {fileID: 0}
+--- !u!114 &4220835088306305095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601176788466853463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da1a64d01f941df4f98b0915a322e78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCameraOverride: {fileID: 0}
+  offsetX: 1.5
+  offsetY: 0
+  width: 1
+  height: 1
+  sampleResolution: 16
+  sampleInterval: 0.1
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
