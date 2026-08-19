@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource[] musicLayerSources;
 
+    private bool variableLayersActive;
     private bool isDying;
 
     public float MasterVolume { get; private set; }
@@ -55,7 +56,7 @@ public class AudioManager : MonoBehaviour
         }
 
         BuildMusicLayerSources();
-        PlayBaseLayers();
+        BeginMusic();
 
         EventBus<GameStartEvent>.Subscribe(OnGameStart);
         EventBus<PlayerDeathEvent>.Subscribe(OnPlayerDeath);
@@ -77,9 +78,17 @@ public class AudioManager : MonoBehaviour
         for (int i = 0; i < musicLayerSources.Length; i++)
         {
             MusicLayerConfig.MusicLayer layer = musicConfig.layers[i];
-            float layerVolume = layer.isBase ? layer.maxVolume : EvaluateLayerVolume(layer, difficulty);
-            float target = layerVolume * MusicVolume * MasterVolume;
+            float layerVolume;
+            if (layer.isBase)
+            {
+                layerVolume = layer.maxVolume;
+            }
+            else
+            {
+                layerVolume = variableLayersActive ? EvaluateLayerVolume(layer, difficulty) : 0f;
+            }
 
+            float target = layerVolume * MusicVolume * MasterVolume;
             AudioSource source = musicLayerSources[i];
             source.volume = Mathf.MoveTowards(source.volume, target, volumeLerpSpeed * Time.deltaTime);
         }
@@ -87,7 +96,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnGameStart(GameStartEvent e)
     {
-        BeginVariableLayers();
+        variableLayersActive = true;
     }
 
     private void OnPlayerDeath(PlayerDeathEvent e)
@@ -111,27 +120,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void PlayBaseLayers()
+    private void BeginMusic()
     {
         if (musicLayerSources == null) return;
 
         double startTime = AudioSettings.dspTime + 0.1;
-        for (int i = 0; i < musicLayerSources.Length; i++)
+        foreach (AudioSource source in musicLayerSources)
         {
-            if (!musicConfig.layers[i].isBase) continue;
-            musicLayerSources[i].PlayScheduled(startTime);
-        }
-    }
-
-    private void BeginVariableLayers()
-    {
-        if (musicLayerSources == null) return;
-
-        double startTime = AudioSettings.dspTime + 0.1;
-        for (int i = 0; i < musicLayerSources.Length; i++)
-        {
-            if (musicConfig.layers[i].isBase) continue;
-            musicLayerSources[i].PlayScheduled(startTime);
+            source.PlayScheduled(startTime);
         }
     }
 
