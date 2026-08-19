@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77fc230852a842c48b666690e6de17f7, type: 3}
+  m_Name: MusicLayerConfig
+  m_EditorClassIdentifier: 
+  layers:
+  - clip: {fileID: 8300000, guid: f8d3d4f0b55d1f049a7c98c1f231ace1, type: 3}
+    isBase: 1
+    startDifficulty: -1
+    maxDifficulty: 0
+    maxVolume: 0.4
+  - clip: {fileID: 8300000, guid: 44ce046dc7877a548abdc8b7d12ad2ac, type: 3}
+    isBase: 1
+    startDifficulty: -1
+    maxDifficulty: 0
+    maxVolume: 0.75
+  - clip: {fileID: 8300000, guid: f42ee9239a68da54da57a228fe8cabb7, type: 3}
+    isBase: 0
+    startDifficulty: 0
+    maxDifficulty: 0
+    maxVolume: 0.65
+  - clip: {fileID: 8300000, guid: 9fadf4bbb3a136a4497a2d00dd37498f, type: 3}
+    isBase: 0
+    startDifficulty: 0
+    maxDifficulty: 1
+    maxVolume: 0.965
+  - clip: {fileID: 8300000, guid: 14959c8b6d41b194c878f12f4bd8c581, type: 3}
+    isBase: 0
+    startDifficulty: 1
+    maxDifficulty: 2
+    maxVolume: 0.25
+  - clip: {fileID: 8300000, guid: a0fde2e5993af3e4d996ab162539491a, type: 3}
+    isBase: 0
+    startDifficulty: 2
+    maxDifficulty: 3
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: a673ed7837f284c4bba6d89db28172cf, type: 3}
+    isBase: 0
+    startDifficulty: 3
+    maxDifficulty: 4
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: 76bb00af1246b0c4e86da72a5b8caaca, type: 3}
+    isBase: 0
+    startDifficulty: 4
+    maxDifficulty: 5
+    maxVolume: 1
