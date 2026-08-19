@@ -1,3 +1,4 @@
+using System.Collections;
 using BFTools.Core.EventBus;
 using Dan.Main;
 using TMPro;
@@ -10,6 +11,7 @@ public class HighScoreUI : MonoBehaviour
     [SerializeField] private TMP_InputField nameInput;
     [SerializeField] private Button submitButton;
     [SerializeField] private TMP_Text statusText;
+    [SerializeField] private float submitTimeoutSeconds = 8f;
 
     private void Awake()
     {
@@ -43,13 +45,6 @@ public class HighScoreUI : MonoBehaviour
     {
         var playerName = string.IsNullOrWhiteSpace(nameInput.text) ? "Player" : nameInput.text.Trim();
 
-        if (string.IsNullOrEmpty(LeaderboardCreator.UserGuid))
-        {
-            statusText.text = "Could not connect to leaderboard.";
-            GameManager.Instance.CompleteHighScore();
-            return;
-        }
-
         submitButton.interactable = false;
         statusText.text = "Submitting...";
 
@@ -57,6 +52,15 @@ public class HighScoreUI : MonoBehaviour
             LeaderboardKeys.WannaJam2026,
             playerName,
             ScoreManager.Instance.Score,
-            isSuccessful => GameManager.Instance.CompleteHighScore());
+            isSuccessful => GameManager.Instance.CompleteHighScore(),
+            errorMessage => GameManager.Instance.CompleteHighScore());
+
+        StartCoroutine(SubmitTimeoutFallback());
+    }
+
+    private IEnumerator SubmitTimeoutFallback()
+    {
+        yield return new WaitForSeconds(submitTimeoutSeconds);
+        GameManager.Instance.CompleteHighScore();
     }
 }
