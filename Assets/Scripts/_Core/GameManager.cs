@@ -2,10 +2,12 @@ using System.Collections;
 using BFTools.Core.EventBus;
 using BFTools.Feedback.ScreenFlash;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum GameState
 {
     Playing,
+    Paused,
     Dying,
     HighScore,
     GameOver
@@ -31,16 +33,56 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Playing;
 
+    private InputAction gameplayPauseAction;
+    private InputAction menuPauseAction;
+
     private void Awake()
     {
         instance = this;
         InputManager.Instance.EnableGameplay();
         EventBus<PlayerDeathEvent>.Subscribe(OnPlayerDeath);
+
+        gameplayPauseAction = InputManager.Instance.GetGameplayAction("Pause");
+        menuPauseAction = InputManager.Instance.GetMenuAction("Pause");
+        gameplayPauseAction.performed += OnPausePerformed;
+        menuPauseAction.performed += OnPausePerformed;
     }
 
     private void OnDestroy()
     {
         EventBus<PlayerDeathEvent>.Unsubscribe(OnPlayerDeath);
+        gameplayPauseAction.performed -= OnPausePerformed;
+        menuPauseAction.performed -= OnPausePerformed;
+    }
+
+    private void OnPausePerformed(InputAction.CallbackContext ctx)
+    {
+        if (CurrentState == GameState.Playing)
+        {
+            Pause();
+        }
+        else if (CurrentState == GameState.Paused)
+        {
+            Resume();
+        }
+    }
+
+    public void Pause()
+    {
+        if (CurrentState != GameState.Playing) return;
+
+        Time.timeScale = 0f;
+        InputManager.Instance.EnableMenu();
+        ChangeState(GameState.Paused);
+    }
+
+    public void Resume()
+    {
+        if (CurrentState != GameState.Paused) return;
+
+        Time.timeScale = 1f;
+        InputManager.Instance.EnableGameplay();
+        ChangeState(GameState.Playing);
     }
 
     private void OnPlayerDeath(PlayerDeathEvent e)
