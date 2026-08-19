@@ -15,5 +15,5 @@ MonoBehaviour:
   authSaveMode: 0
   fileName: leaderboard-creator-guid.txt
   isUpdateLogsEnabled: 1
-  leaderboardsFile: {fileID: 11500000, guid: 8ff334e8988744eea42cf12786ee20d5, type: 3}
+  leaderboardsFile: {fileID: 4900000, guid: 5acfc3d506d9a854589cebec611a66e7, type: 3}
   editorOnlyLeaderboardsFile: {fileID: 4900000, guid: 5acfc3d506d9a854589cebec611a66e7, type: 3}
