@@ -12,4 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fc230852a842c48b666690e6de17f7, type: 3}
   m_Name: MusicLayerConfig
   m_EditorClassIdentifier: 
-  layers: []
+  layers:
+  - clip: {fileID: 8300000, guid: f8d3d4f0b55d1f049a7c98c1f231ace1, type: 3}
+    startDifficulty: 0
+    maxDifficulty: 0
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: 44ce046dc7877a548abdc8b7d12ad2ac, type: 3}
+    startDifficulty: 0
+    maxDifficulty: 0
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: f42ee9239a68da54da57a228fe8cabb7, type: 3}
+    startDifficulty: 0
+    maxDifficulty: 100
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: 9fadf4bbb3a136a4497a2d00dd37498f, type: 3}
+    startDifficulty: 100
+    maxDifficulty: 200
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: 14959c8b6d41b194c878f12f4bd8c581, type: 3}
+    startDifficulty: 200
+    maxDifficulty: 300
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: a0fde2e5993af3e4d996ab162539491a, type: 3}
+    startDifficulty: 300
+    maxDifficulty: 400
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: a673ed7837f284c4bba6d89db28172cf, type: 3}
+    startDifficulty: 400
+    maxDifficulty: 500
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: 76bb00af1246b0c4e86da72a5b8caaca, type: 3}
+    startDifficulty: 500
+    maxDifficulty: 600
+    maxVolume: 1

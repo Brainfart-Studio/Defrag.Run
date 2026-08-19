@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using BFTools.Core.EventBus;
 using UnityEngine;
@@ -18,10 +19,15 @@ public class AudioManager : MonoBehaviour
     [Tooltip("How fast a music layer's volume glides toward its target, in volume units per second")]
     [SerializeField] private float volumeLerpSpeed = 0.5f;
 
+    [Tooltip("Duration of the variable-layer fade out when the player dies, in seconds")]
+    [SerializeField] private float deathFadeDuration = 1f;
+
     private AudioSource[] sfxSources;
     private int nextSfxSourceIndex;
 
     private AudioSource[] musicLayerSources;
+
+    private bool isDying;
 
     public float MasterVolume { get; private set; }
     public float MusicVolume { get; private set; }
@@ -51,11 +57,13 @@ public class AudioManager : MonoBehaviour
         BuildMusicLayerSources();
 
         EventBus<GameStartEvent>.Subscribe(OnGameStart);
+        EventBus<PlayerDeathEvent>.Subscribe(OnPlayerDeath);
     }
 
     private void OnDestroy()
     {
         EventBus<GameStartEvent>.Unsubscribe(OnGameStart);
+        EventBus<PlayerDeathEvent>.Unsubscribe(OnPlayerDeath);
     }
 
     private void Update()
@@ -67,6 +75,8 @@ public class AudioManager : MonoBehaviour
         for (int i = 0; i < musicLayerSources.Length; i++)
         {
             MusicLayerConfig.MusicLayer layer = musicConfig.layers[i];
+            if (layer.isBase || isDying) continue;
+
             float target = EvaluateLayerVolume(layer, difficulty) * MusicVolume * MasterVolume;
             AudioSource source = musicLayerSources[i];
             source.volume = Mathf.MoveTowards(source.volume, target, volumeLerpSpeed * Time.deltaTime);
@@ -76,6 +86,11 @@ public class AudioManager : MonoBehaviour
     private void OnGameStart(GameStartEvent e)
     {
         BeginMusic();
+    }
+
+    private void OnPlayerDeath(PlayerDeathEvent e)
+    {
+        StartCoroutine(FadeOutVariableLayers());
     }
 
     private void BuildMusicLayerSources()
@@ -103,6 +118,30 @@ public class AudioManager : MonoBehaviour
         {
             source.PlayScheduled(startTime);
         }
+    }
+
+    private IEnumerator FadeOutVariableLayers()
+    {
+        isDying = true;
+
+        float[] startVolumes = new float[musicLayerSources.Length];
+        for (int i = 0; i < musicLayerSources.Length; i++)
+            startVolumes[i] = musicLayerSources[i].volume;
+
+        float t = 0f;
+        while (t < deathFadeDuration)
+        {
+            t += Time.deltaTime;
+            float f = t / deathFadeDuration;
+            for (int i = 0; i < musicLayerSources.Length; i++)
+            {
+                if (musicConfig.layers[i].isBase) continue;
+                musicLayerSources[i].volume = Mathf.Lerp(startVolumes[i], 0f, f);
+            }
+            yield return null;
+        }
+
+        isDying = false;
     }
 
     private float EvaluateLayerVolume(MusicLayerConfig.MusicLayer layer, float difficulty)
