@@ -69,15 +69,16 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         if (musicLayerSources == null) return;
+        if (isDying) return;
 
         float difficulty = DifficultyManager.Instance != null ? DifficultyManager.Instance.Difficulty : 0f;
 
         for (int i = 0; i < musicLayerSources.Length; i++)
         {
             MusicLayerConfig.MusicLayer layer = musicConfig.layers[i];
-            if (layer.isBase || isDying) continue;
+            float layerVolume = layer.isBase ? layer.maxVolume : EvaluateLayerVolume(layer, difficulty);
+            float target = layerVolume * MusicVolume * MasterVolume;
 
-            float target = EvaluateLayerVolume(layer, difficulty) * MusicVolume * MasterVolume;
             AudioSource source = musicLayerSources[i];
             source.volume = Mathf.MoveTowards(source.volume, target, volumeLerpSpeed * Time.deltaTime);
         }
