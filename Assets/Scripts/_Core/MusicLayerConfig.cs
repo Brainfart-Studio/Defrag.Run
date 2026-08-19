@@ -10,6 +10,9 @@ public class MusicLayerConfig : ScriptableObject
     {
         public AudioClip clip;
 
+        [Tooltip("Always plays at full volume, unaffected by difficulty or the death fade")]
+        public bool isBase;
+
         [Tooltip("Difficulty at which this layer starts fading in")]
         public float startDifficulty;
 
