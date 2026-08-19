@@ -13,6 +13,8 @@ public class HighScoreUI : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private float submitTimeoutSeconds = 8f;
 
+    private bool completed;
+
     private void Awake()
     {
         panelRoot.SetActive(false);
@@ -37,6 +39,7 @@ public class HighScoreUI : MonoBehaviour
         nameInput.text = string.Empty;
         statusText.text = string.Empty;
         submitButton.interactable = true;
+        completed = false;
         InputManager.Instance.EnableMenu();
         panelRoot.SetActive(true);
     }
@@ -52,15 +55,23 @@ public class HighScoreUI : MonoBehaviour
             LeaderboardKeys.WannaJam2026,
             playerName,
             ScoreManager.Instance.Score,
-            isSuccessful => GameManager.Instance.CompleteHighScore(),
-            errorMessage => GameManager.Instance.CompleteHighScore());
+            isSuccessful => Complete(),
+            errorMessage => Complete());
 
         StartCoroutine(SubmitTimeoutFallback());
+    }
+
+    private void Complete()
+    {
+        if (completed) return;
+
+        completed = true;
+        GameManager.Instance.CompleteHighScore();
     }
 
     private IEnumerator SubmitTimeoutFallback()
     {
         yield return new WaitForSeconds(submitTimeoutSeconds);
-        GameManager.Instance.CompleteHighScore();
+        Complete();
     }
 }
