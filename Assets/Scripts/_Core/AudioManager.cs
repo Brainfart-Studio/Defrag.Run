@@ -101,6 +101,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnPlayerDeath(PlayerDeathEvent e)
     {
+        variableLayersActive = false;
         StartCoroutine(FadeOutVariableLayers());
     }
 
