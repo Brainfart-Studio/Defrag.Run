@@ -55,6 +55,7 @@ public class AudioManager : MonoBehaviour
         }
 
         BuildMusicLayerSources();
+        PlayBaseLayers();
 
         EventBus<GameStartEvent>.Subscribe(OnGameStart);
         EventBus<PlayerDeathEvent>.Subscribe(OnPlayerDeath);
@@ -86,7 +87,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnGameStart(GameStartEvent e)
     {
-        BeginMusic();
+        BeginVariableLayers();
     }
 
     private void OnPlayerDeath(PlayerDeathEvent e)
@@ -110,14 +111,27 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void BeginMusic()
+    private void PlayBaseLayers()
     {
         if (musicLayerSources == null) return;
 
         double startTime = AudioSettings.dspTime + 0.1;
-        foreach (AudioSource source in musicLayerSources)
+        for (int i = 0; i < musicLayerSources.Length; i++)
         {
-            source.PlayScheduled(startTime);
+            if (!musicConfig.layers[i].isBase) continue;
+            musicLayerSources[i].PlayScheduled(startTime);
+        }
+    }
+
+    private void BeginVariableLayers()
+    {
+        if (musicLayerSources == null) return;
+
+        double startTime = AudioSettings.dspTime + 0.1;
+        for (int i = 0; i < musicLayerSources.Length; i++)
+        {
+            if (musicConfig.layers[i].isBase) continue;
+            musicLayerSources[i].PlayScheduled(startTime);
         }
     }
 
