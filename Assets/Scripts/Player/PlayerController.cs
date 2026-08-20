@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     private float dashCooldownCounter;
     private int dashesRemaining;
 
+    private float lagRunModifier = 1f;
+    private float lagFallModifier = 1f;
+
     // Public accessors
     public Rigidbody2D GetRigidbody() => rb;
     public PlayerInputHandler GetInputHandler() => inputHandler;
@@ -54,7 +57,7 @@ public class PlayerController : MonoBehaviour
         if (isDashing) return;
 
         float speedMultiplier = GetApexSpeedBoost();
-        float targetSpeed = moveInputX * config.runSpeed * speedMultiplier;
+        float targetSpeed = moveInputX * config.runSpeed * speedMultiplier * lagRunModifier;
         float accel = config.runAccel * (IsGrounded ? 1f : config.airMult);
         float newSpeedX = Mathf.MoveTowards(rb.velocity.x, targetSpeed, accel * Time.fixedDeltaTime);
         rb.velocity = new Vector2(newSpeedX, rb.velocity.y);
@@ -177,7 +180,7 @@ public class PlayerController : MonoBehaviour
         if (isDashing) return;
 
         float gravityMultiplier = GetApexGravityReduction();
-        rb.velocity += Vector2.down * Mathf.Abs(config.gravity) * gravityMultiplier * Time.fixedDeltaTime;
+        rb.velocity += Vector2.down * Mathf.Abs(config.gravity) * gravityMultiplier * lagFallModifier * Time.fixedDeltaTime;
     }
 
     private float GetApexGravityReduction()
@@ -194,9 +197,10 @@ public class PlayerController : MonoBehaviour
     {
         if (isDashing) return;
 
-        if (config.maxFallSpeed < 0 && rb.velocity.y < config.maxFallSpeed)
+        float maxFallSpeed = config.maxFallSpeed * lagFallModifier;
+        if (maxFallSpeed < 0 && rb.velocity.y < maxFallSpeed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, config.maxFallSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
         }
     }
 
@@ -253,6 +257,23 @@ public class PlayerController : MonoBehaviour
         {
             dashesRemaining = config.maxDashes;
         }
+    }
+    #endregion
+
+    #region Lag Modifiers
+    // Applied in Move/ApplyCustomGravity/ClampFallSpeed, all of which already skip
+    // out early while isDashing - so a lag zone slows running and falling but never
+    // the dash itself, with no dash-specific check needed here.
+    public void SetLagModifiers(float runModifier, float fallModifier)
+    {
+        lagRunModifier = runModifier;
+        lagFallModifier = fallModifier;
+    }
+
+    public void ClearLagModifiers()
+    {
+        lagRunModifier = 1f;
+        lagFallModifier = 1f;
     }
     #endregion
 }

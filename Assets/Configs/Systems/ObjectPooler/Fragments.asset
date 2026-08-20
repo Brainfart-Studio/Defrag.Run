@@ -22,3 +22,33 @@ MonoBehaviour:
   - key: Spike
     prefab: {fileID: 7498287049124879578, guid: 1f4de65df21a60e46b1021eb8ad6e570, type: 3}
     prewarmCount: 10
+  - key: ToggleBlock
+    prefab: {fileID: 3985685841937241565, guid: 5fa645e92b5c03540bfdd26286e265d5, type: 3}
+    prewarmCount: 10
+  - key: CrumbleFall
+    prefab: {fileID: 8166767496354325282, guid: 52b027954cc08004197349d36e3dcbe9, type: 3}
+    prewarmCount: 10
+  - key: PulseLaser_Bottom
+    prefab: {fileID: 8625026579061880276, guid: 6bfec3ea32a04e242a5c67d7c1e279ed, type: 3}
+    prewarmCount: 10
+  - key: PulseLaser_Left
+    prefab: {fileID: 8667631675739037284, guid: b261d08aa938a9a4eba62bbb87ae3337, type: 3}
+    prewarmCount: 10
+  - key: PulseLaser_Right
+    prefab: {fileID: 9164642672628977478, guid: e80c0b34b7866e04481e0797d1076465, type: 3}
+    prewarmCount: 10
+  - key: PulseLaser_Top
+    prefab: {fileID: 2823676808647995316, guid: ceb3ce78c3b07cc41aeffe88859777ff, type: 3}
+    prewarmCount: 10
+  - key: StaticLaser_Bottom
+    prefab: {fileID: 9130708308953640014, guid: 3b3638c5918765546b46f5fd46426447, type: 3}
+    prewarmCount: 10
+  - key: StaticLaser_Left
+    prefab: {fileID: 6085181297732331832, guid: b27ab037736d010488397df509c14b1e, type: 3}
+    prewarmCount: 10
+  - key: StaticLaser_Right
+    prefab: {fileID: 158539513379628547, guid: bbf1f8db9c703cf4cb0deadd628f5815, type: 3}
+    prewarmCount: 10
+  - key: StaticLaser_Top
+    prefab: {fileID: 3619042559781617199, guid: 9363ae4f3a39f254898647f51e41f4da, type: 3}
+    prewarmCount: 10

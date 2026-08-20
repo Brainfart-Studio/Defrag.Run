@@ -10,6 +10,8 @@ public class ChunkLoader : MonoBehaviour
     private struct ActiveChunk
     {
         public BoundsInt tileBounds;
+        public bool hasLagZoneBounds;
+        public BoundsInt lagZoneBounds;
         public List<GameObject> hazardInstances;
     }
 
@@ -23,6 +25,7 @@ public class ChunkLoader : MonoBehaviour
         public int column;
         public string poolKey;
         public Vector3 spawnPosition;
+        public Vector3 spawnScale;
         public List<GameObject> targetList;
     }
 
@@ -40,6 +43,10 @@ public class ChunkLoader : MonoBehaviour
 
     [SerializeField] private List<GameObject> chunkPrefabs;
     [SerializeField] private Tilemap masterTilemap;
+
+    [Tooltip("Persistent trigger tilemap lag zones get copied into - optional, a chunk with no LagZoneTilemap child just has none")]
+    [SerializeField] private Tilemap lagZoneTilemap;
+
     [SerializeField] private Transform spawnBoundary;
     [SerializeField] private Transform unloadBoundary;
     [SerializeField] private TileBuilder tileBuilder;
@@ -117,25 +124,57 @@ public class ChunkLoader : MonoBehaviour
 
         BoundsInt destBounds = new BoundsInt(nextSpawnCellX, sourceBounds.yMin, 0, sourceBounds.size.x, sourceBounds.size.y, 1);
         masterTilemap.SetTilesBlock(destBounds, tiles);
-        HidePendingTiles(destBounds);
+        HidePendingTiles(masterTilemap, destBounds);
+
+        bool hasLagZoneBounds = false;
+        BoundsInt lagZoneBounds = default;
+
+        // Optional per-chunk lag zone source - a chunk with no "LagZoneTilemap" child
+        // just has nothing to copy. Same source-to-dest bulk copy as the ground
+        // tilemap above, kept on its own tilemap so its trigger collider never
+        // touches ground collision.
+        Transform lagZoneSource = chunkPrefab.transform.Find("LagZoneTilemap");
+        if (lagZoneTilemap != null && lagZoneSource != null && lagZoneSource.TryGetComponent(out Tilemap chunkLagZoneTilemap))
+        {
+            BoundsInt lagSourceBounds = chunkLagZoneTilemap.cellBounds;
+            TileBase[] lagTiles = chunkLagZoneTilemap.GetTilesBlock(lagSourceBounds);
+
+            lagZoneBounds = new BoundsInt(nextSpawnCellX, lagSourceBounds.yMin, 0, lagSourceBounds.size.x, lagSourceBounds.size.y, 1);
+            lagZoneTilemap.SetTilesBlock(lagZoneBounds, lagTiles);
+            HidePendingTiles(lagZoneTilemap, lagZoneBounds);
+            hasLagZoneBounds = true;
+        }
 
         List<GameObject> hazardInstances = new List<GameObject>();
         foreach (ChunkHazardMarker marker in chunkPrefab.GetComponentsInChildren<ChunkHazardMarker>(true))
         {
             Vector3 localOffset = chunkPrefab.transform.InverseTransformPoint(marker.transform.position);
             Vector3 spawnPosition = new Vector3(nextSpawnCellX + localOffset.x, localOffset.y, 0f);
-            int column = masterTilemap.WorldToCell(spawnPosition).x;
+            Vector3 spawnScale = marker.transform.localScale;
+
+            // Gate on the hazard's rightmost column, not its pivot - a multi-cell
+            // hazard (e.g. a resized lag zone) would otherwise pop in fully before
+            // the build line finishes assembling the tiles under its far edge.
+            float rightEdgeX = spawnPosition.x + spawnScale.x / 2f;
+            int column = masterTilemap.WorldToCell(new Vector3(rightEdgeX, spawnPosition.y, 0f)).x;
 
             pendingHazards.Add(new PendingHazard
             {
                 column = column,
                 poolKey = marker.PoolKey,
                 spawnPosition = spawnPosition,
+                spawnScale = spawnScale,
                 targetList = hazardInstances
             });
         }
 
-        activeChunks.Enqueue(new ActiveChunk { tileBounds = destBounds, hazardInstances = hazardInstances });
+        activeChunks.Enqueue(new ActiveChunk
+        {
+            tileBounds = destBounds,
+            hasLagZoneBounds = hasLagZoneBounds,
+            lagZoneBounds = lagZoneBounds,
+            hazardInstances = hazardInstances
+        });
         nextSpawnCellX += chunkWidth;
     }
 
@@ -156,6 +195,7 @@ public class ChunkLoader : MonoBehaviour
 
             GameObject instance = pooler.Get(pending.poolKey);
             instance.transform.position = pending.spawnPosition;
+            instance.transform.localScale = pending.spawnScale;
             pending.targetList.Add(instance);
 
             instance.TryGetComponent(out SpriteRenderer renderer);
@@ -237,16 +277,17 @@ public class ChunkLoader : MonoBehaviour
 
     // Newly placed tiles are real and connected to their neighbors right away
     // (so rule-tile matching resolves correctly against the previous chunk), but
-    // stay invisible and non-solid until TileBuilder's build line reaches them.
-    private void HidePendingTiles(BoundsInt bounds)
+    // stay invisible and non-solid until the build line reaches them. Shared by
+    // the ground tilemap and the lag zone tilemap - same rule applies to both.
+    private void HidePendingTiles(Tilemap tilemap, BoundsInt bounds)
     {
         foreach (Vector3Int cell in bounds.allPositionsWithin)
         {
-            if (!masterTilemap.HasTile(cell)) continue;
+            if (!tilemap.HasTile(cell)) continue;
 
-            masterTilemap.SetTileFlags(cell, TileFlags.None);
-            masterTilemap.SetColor(cell, Color.clear);
-            masterTilemap.SetColliderType(cell, Tile.ColliderType.None);
+            tilemap.SetTileFlags(cell, TileFlags.None);
+            tilemap.SetColor(cell, Color.clear);
+            tilemap.SetColliderType(cell, Tile.ColliderType.None);
         }
     }
 
@@ -254,6 +295,12 @@ public class ChunkLoader : MonoBehaviour
     {
         TileBase[] emptyTiles = new TileBase[chunk.tileBounds.size.x * chunk.tileBounds.size.y];
         masterTilemap.SetTilesBlock(chunk.tileBounds, emptyTiles);
+
+        if (chunk.hasLagZoneBounds)
+        {
+            TileBase[] emptyLagZoneTiles = new TileBase[chunk.lagZoneBounds.size.x * chunk.lagZoneBounds.size.y];
+            lagZoneTilemap.SetTilesBlock(chunk.lagZoneBounds, emptyLagZoneTiles);
+        }
 
         foreach (GameObject hazard in chunk.hazardInstances)
         {
