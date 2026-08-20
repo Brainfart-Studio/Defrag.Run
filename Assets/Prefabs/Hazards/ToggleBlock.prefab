@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2683269570637755922}
   - component: {fileID: 9171337765410050055}
   - component: {fileID: 54946743990047714}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ToggleBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
