@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3619042559781617199
+--- !u!1 &8625026579061880276
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3579932319384020186}
-  - component: {fileID: 5905156877430858803}
-  - component: {fileID: 7214621636448444810}
-  - component: {fileID: 2216980144411540838}
-  - component: {fileID: 7088622599340991042}
-  - component: {fileID: 5810758015522502559}
+  - component: {fileID: 8281006117292839548}
+  - component: {fileID: 159918402741819126}
+  - component: {fileID: 3917705901983041543}
+  - component: {fileID: 1007164296365998904}
+  - component: {fileID: 2749407978761951630}
+  - component: {fileID: 56627168972226302}
+  - component: {fileID: 3123654634857199835}
   m_Layer: 0
-  m_Name: StaticLaser_Top
+  m_Name: PulseLaser_Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3579932319384020186
+--- !u!4 &8281006117292839548
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619042559781617199}
+  m_GameObject: {fileID: 8625026579061880276}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -36,13 +37,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5905156877430858803
+--- !u!212 &159918402741819126
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619042559781617199}
+  m_GameObject: {fileID: 8625026579061880276}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -88,28 +89,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7214621636448444810
+--- !u!114 &3917705901983041543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619042559781617199}
+  m_GameObject: {fileID: 8625026579061880276}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2134a42df43d6fa499b2382a2446e274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
-  cellOffset: {x: 0.5, y: 0.7}
---- !u!120 &2216980144411540838
+  cellOffset: {x: 0.5, y: 0.3}
+--- !u!120 &1007164296365998904
 LineRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619042559781617199}
+  m_GameObject: {fileID: 8625026579061880276}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -206,13 +207,13 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &7088622599340991042
+--- !u!114 &2749407978761951630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619042559781617199}
+  m_GameObject: {fileID: 8625026579061880276}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a8f8e1ce2dc1a5479ab45be06f73f90, type: 3}
@@ -220,15 +221,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentLength: 0.25
   jaggedness: 0.1
-  laserColor: {r: 0, g: 1, b: 0.9898968, a: 1}
+  laserColor: {r: 0.069517374, g: 1, b: 0, a: 1}
   laserParticles: {fileID: 0}
---- !u!114 &5810758015522502559
+--- !u!114 &56627168972226302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619042559781617199}
+  m_GameObject: {fileID: 8625026579061880276}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c2a6cc10076185489eefb9bb3fac8fa, type: 3}
@@ -241,5 +242,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   startOffset: {x: 0, y: 0.5, z: 0}
-  laserType: 1
+  laserType: 2
   laserEnabled: 1
+--- !u!114 &3123654634857199835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625026579061880276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5877e58385acaaa43b487c483cea5904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDuration: 1
+  offDuration: 1
+  startDelay: 0
