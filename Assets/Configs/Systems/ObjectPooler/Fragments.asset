@@ -25,3 +25,6 @@ MonoBehaviour:
   - key: ToggleBlock
     prefab: {fileID: 3985685841937241565, guid: 5fa645e92b5c03540bfdd26286e265d5, type: 3}
     prewarmCount: 10
+  - key: CrumbleFall
+    prefab: {fileID: 8166767496354325282, guid: 52b027954cc08004197349d36e3dcbe9, type: 3}
+    prewarmCount: 10
