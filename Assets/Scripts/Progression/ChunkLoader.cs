@@ -123,7 +123,7 @@ public class ChunkLoader : MonoBehaviour
 
     private void SpawnChunk()
     {
-        GameObject chunkPrefab = chunkPrefabs[Random.Range(0, chunkPrefabs.Count)];
+        GameObject chunkPrefab = chunkPrefabs[UnityEngine.Random.Range(0, chunkPrefabs.Count)];
         Tilemap chunkTilemap = chunkPrefab.GetComponentInChildren<Tilemap>();
 
         BoundsInt sourceBounds = chunkTilemap.cellBounds;
