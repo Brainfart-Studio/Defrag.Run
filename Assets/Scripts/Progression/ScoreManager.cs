@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
     private bool isTracking;
 
     public float MaxDistance { get; private set; }
+    public int Score => Mathf.RoundToInt(MaxDistance);
 
     private void Awake()
     {

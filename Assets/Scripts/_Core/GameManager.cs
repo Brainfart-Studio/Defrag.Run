@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance => instance;
 
-    [Tooltip("Time to hold in the Dying state before moving to GameOver. Placeholder until death visuals (particles, tile break-fall) are wired up")]
+    [Tooltip("Time to hold in the Dying state before moving to HighScore. Placeholder until death visuals (particles, tile break-fall) are wired up")]
     [SerializeField] private float deathSequenceDuration = 1.5f;
 
     public GameState CurrentState { get; private set; } = GameState.Playing;
@@ -95,6 +95,16 @@ public class GameManager : MonoBehaviour
     private IEnumerator EndDeathSequence()
     {
         yield return new WaitForSeconds(deathSequenceDuration);
+        ChangeState(GameState.HighScore);
+    }
+
+    /// <summary>
+    /// Called once score submission (or skip) is complete, moving from the HighScore state to GameOver.
+    /// </summary>
+    public void CompleteHighScore()
+    {
+        if (CurrentState != GameState.HighScore) return;
+
         ChangeState(GameState.GameOver);
     }
 
