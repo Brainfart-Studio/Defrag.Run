@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BFTools.Core.EventBus;
 using BFTools.Core.ServiceLocator;
@@ -62,6 +63,12 @@ public class ChunkLoader : MonoBehaviour
     private readonly HashSet<int> decayedColumnsScratch = new HashSet<int>();
     private int nextSpawnCellX;
     private bool isActive = true;
+
+    // Debug-only hooks - fired around chunk spawn/unload so an optional overlay
+    // (chunk tint + name label for playtesting) can react without ChunkLoader
+    // knowing or caring whether anything is listening.
+    public event Action<GameObject, BoundsInt> OnChunkSpawned;
+    public event Action<BoundsInt> OnChunkUnloaded;
 
     private void Awake()
     {
@@ -176,6 +183,8 @@ public class ChunkLoader : MonoBehaviour
             hazardInstances = hazardInstances
         });
         nextSpawnCellX += chunkWidth;
+
+        OnChunkSpawned?.Invoke(chunkPrefab, destBounds);
     }
 
     // Mirrors the build line reaching a column of tiles: any hazard marker queued
@@ -293,6 +302,8 @@ public class ChunkLoader : MonoBehaviour
 
     private void UnloadChunk(ActiveChunk chunk)
     {
+        OnChunkUnloaded?.Invoke(chunk.tileBounds);
+
         TileBase[] emptyTiles = new TileBase[chunk.tileBounds.size.x * chunk.tileBounds.size.y];
         masterTilemap.SetTilesBlock(chunk.tileBounds, emptyTiles);
 
