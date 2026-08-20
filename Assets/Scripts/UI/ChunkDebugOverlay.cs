@@ -3,17 +3,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// Playtest-only aid: tints each spawned chunk a random color and labels it with
-// the chunk prefab's name, so a playtester can tell exactly which chunk
-// an issue happened in. Purely a listener on ChunkLoader's spawn/unload events -
-// ChunkLoader has no idea this exists. Safe to disable or delete outright before
-// a release build; see enableDebugOverlay below.
+// Playtest-only aid: tints each spawned chunk a random color, and keeps an
+// on-screen HUD label showing the name of whichever chunk the player is
+// currently standing in, so a playtester can report exactly where an issue
+// happened. Purely a listener on ChunkLoader's spawn/unload events -
+// ChunkLoader has no idea this exists. Safe to disable or delete outright
+// before a release build; see enableDebugOverlay below.
 public class ChunkDebugOverlay : MonoBehaviour
 {
-    private struct DebugVisual
+    private struct ActiveChunkVisual
     {
         public GameObject tint;
-        public GameObject label;
+        public string chunkName;
+        public float worldMinX;
+        public float worldMaxX;
     }
 
     [Tooltip("Master on/off switch for this overlay. Flip off (or delete this GameObject) before a release build")]
@@ -21,6 +24,9 @@ public class ChunkDebugOverlay : MonoBehaviour
 
     [SerializeField] private ChunkLoader chunkLoader;
     [SerializeField] private Tilemap masterTilemap;
+
+    [Tooltip("Screen-space UI text this overlay writes the current chunk's name into")]
+    [SerializeField] private TMP_Text chunkNameLabel;
 
     [Tooltip("Alpha of the random chunk tint - low enough that tiles/hazards stay readable through it")]
     [SerializeField, Range(0f, 1f)] private float tintAlpha = 0.25f;
@@ -32,8 +38,10 @@ public class ChunkDebugOverlay : MonoBehaviour
 
     // Chunks unload strictly in the order they spawned (same FIFO ChunkLoader
     // uses for activeChunks), so a plain queue stays in sync without needing to
-    // match visuals back to a chunk by bounds.
-    private readonly Queue<DebugVisual> activeVisuals = new Queue<DebugVisual>();
+    // match visuals back to a chunk by bounds. Queue<T> is still enumerable, so
+    // Update() can scan it each frame without dequeuing.
+    private readonly Queue<ActiveChunkVisual> activeVisuals = new Queue<ActiveChunkVisual>();
+    private Transform player;
 
     private void Awake()
     {
@@ -41,6 +49,11 @@ public class ChunkDebugOverlay : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerController>()?.transform;
     }
 
     private void OnEnable()
@@ -53,6 +66,23 @@ public class ChunkDebugOverlay : MonoBehaviour
     {
         chunkLoader.OnChunkSpawned -= HandleChunkSpawned;
         chunkLoader.OnChunkUnloaded -= HandleChunkUnloaded;
+    }
+
+    private void Update()
+    {
+        if (player == null || chunkNameLabel == null) return;
+
+        float playerX = player.position.x;
+
+        foreach (ActiveChunkVisual visual in activeVisuals)
+        {
+            if (playerX < visual.worldMinX || playerX >= visual.worldMaxX) continue;
+
+            chunkNameLabel.text = $"{visual.chunkName}";
+            return;
+        }
+
+        chunkNameLabel.text = "Chunk Debug";
     }
 
     private void HandleChunkSpawned(GameObject chunkPrefab, BoundsInt bounds)
@@ -74,26 +104,21 @@ public class ChunkDebugOverlay : MonoBehaviour
         color.a = tintAlpha;
         renderer.color = color;
 
-        GameObject label = new GameObject($"ChunkDebugLabel ({chunkPrefab.name})");
-        label.transform.SetParent(transform, false);
-        label.transform.position = new Vector3(worldMin.x, worldMax.y, 0f);
-
-        TextMeshPro text = label.AddComponent<TextMeshPro>();
-        text.text = chunkPrefab.name;
-        text.fontSize = 3f;
-        text.color = Color.white;
-        text.alignment = TextAlignmentOptions.TopLeft;
-
-        activeVisuals.Enqueue(new DebugVisual { tint = tint, label = label });
+        activeVisuals.Enqueue(new ActiveChunkVisual
+        {
+            tint = tint,
+            chunkName = chunkPrefab.name,
+            worldMinX = worldMin.x,
+            worldMaxX = worldMax.x
+        });
     }
 
     private void HandleChunkUnloaded(BoundsInt bounds)
     {
         if (activeVisuals.Count == 0) return;
 
-        DebugVisual visual = activeVisuals.Dequeue();
+        ActiveChunkVisual visual = activeVisuals.Dequeue();
         Destroy(visual.tint);
-        Destroy(visual.label);
     }
 
     private static Sprite GetWhitePixelSprite()
