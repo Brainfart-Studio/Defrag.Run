@@ -1,4 +1,3 @@
-// Assets/Scripts/Progression/CrumbleFallPlatform.cs
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]

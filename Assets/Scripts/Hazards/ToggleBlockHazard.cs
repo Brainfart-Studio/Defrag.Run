@@ -1,4 +1,3 @@
-// Assets/Scripts/Progression/ToggleBlockHazard.cs
 using UnityEngine;
 
 public class ToggleBlockHazard : MonoBehaviour
