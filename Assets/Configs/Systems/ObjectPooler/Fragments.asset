@@ -28,3 +28,6 @@ MonoBehaviour:
   - key: CrumbleFall
     prefab: {fileID: 8166767496354325282, guid: 52b027954cc08004197349d36e3dcbe9, type: 3}
     prewarmCount: 10
+  - key: LagZone
+    prefab: {fileID: 8737964866661116889, guid: 2eae1b9276a6a3647b51124fa33e52a1, type: 3}
+    prewarmCount: 10
