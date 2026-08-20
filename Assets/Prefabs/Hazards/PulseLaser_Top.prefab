@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4938515357401687323}
   - component: {fileID: 8183106334505640623}
   - component: {fileID: 9114705128561743660}
+  - component: {fileID: 3298694587029933238}
   m_Layer: 0
   m_Name: PulseLaser_Top
   m_TagString: Untagged
@@ -30,13 +31,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2823676808647995316}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0.5, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &7809006215585787575
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentLength: 0.25
   jaggedness: 0.1
-  laserColor: {r: 0.069517374, g: 1, b: 0, a: 1}
+  laserColor: {r: 0.49019608, g: 1, b: 0.36078432, a: 1}
   laserParticles: {fileID: 0}
 --- !u!114 &8183106334505640623
 MonoBehaviour:
@@ -259,3 +260,16 @@ MonoBehaviour:
   onDuration: 1
   offDuration: 1
   startDelay: 0
+--- !u!114 &3298694587029933238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823676808647995316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814d73bd3758eda4ab0a7474e1e6542f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PoolKey>k__BackingField: PulseLaser_Top
