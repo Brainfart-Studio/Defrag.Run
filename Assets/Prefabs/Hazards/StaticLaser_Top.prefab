@@ -242,7 +242,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   startOffset: {x: 0, y: 0.5, z: 0}
-  laserType: 1
+  laserType: 0
   laserEnabled: 1
 --- !u!114 &-6334268896044992668
 MonoBehaviour:
