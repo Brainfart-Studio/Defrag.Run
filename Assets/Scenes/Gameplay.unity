@@ -10067,7 +10067,7 @@ PrefabInstance:
       objectReference: {fileID: 1792596595}
     - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
       propertyPath: chunkPrefabs.Array.size
-      value: 8
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
       propertyPath: chunkPrefabs.Array.data[0]
@@ -10101,6 +10101,38 @@ PrefabInstance:
       propertyPath: chunkPrefabs.Array.data[7]
       value: 
       objectReference: {fileID: 6288252396531079977, guid: da66116b9fb1256498cd5a0008ce6fc3, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 9152965398671122628, guid: b3eb890158b3ad24aba8b43556cfbb2c, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 9152965398671122628, guid: 45a5dd2ba8182444aa90becaa46e2163, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[10]
+      value: 
+      objectReference: {fileID: 6288252396531079977, guid: 2075481efe6f19e438fb9d6b2c8f7b0f, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[11]
+      value: 
+      objectReference: {fileID: 6288252396531079977, guid: 4dfcf9f89d795e54f958229fb1155dfb, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[12]
+      value: 
+      objectReference: {fileID: 9152965398671122628, guid: 27c7bf9f7caffda4ba05c01edc4934eb, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[13]
+      value: 
+      objectReference: {fileID: 9152965398671122628, guid: 7e3504857a914064bb8f712fe7388927, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[14]
+      value: 
+      objectReference: {fileID: 6288252396531079977, guid: cead3392bd8823f45ac98963d24ba057, type: 3}
+    - target: {fileID: 4730270917070854582, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
+      propertyPath: chunkPrefabs.Array.data[15]
+      value: 
+      objectReference: {fileID: 6288252396531079977, guid: 0fcb3fe056c711f4abab90b23a70e16a, type: 3}
     - target: {fileID: 6862217974191390964, guid: e76df8fb0ab21824ead98847f6691479, type: 3}
       propertyPath: m_Name
       value: ChunkLoader
