@@ -152,11 +152,19 @@ public class ChunkLoader : MonoBehaviour
             hasLagZoneBounds = true;
         }
 
+        // Hazard markers are positioned relative to the chunk's tile content, not
+        // just the prefab root - sourceBounds.xMin is subtracted out the same way
+        // destBounds.xMin replaces it above, so a chunk whose painted tiles don't
+        // happen to start at local x=0 still lines hazards up with where they were
+        // spawned instead of drifting by sourceBounds.xMin.
+        Vector3 tileOriginWorld = chunkTilemap.transform.TransformPoint(Vector3.Scale(sourceBounds.min, chunkTilemap.cellSize));
+        Vector3 tileOriginLocal = chunkPrefab.transform.InverseTransformPoint(tileOriginWorld);
+
         List<GameObject> hazardInstances = new List<GameObject>();
         foreach (ChunkHazardMarker marker in chunkPrefab.GetComponentsInChildren<ChunkHazardMarker>(true))
         {
-            Vector3 localOffset = chunkPrefab.transform.InverseTransformPoint(marker.transform.position);
-            Vector3 spawnPosition = new Vector3(nextSpawnCellX + localOffset.x, localOffset.y, 0f);
+            Vector3 markerLocal = chunkPrefab.transform.InverseTransformPoint(marker.transform.position);
+            Vector3 spawnPosition = new Vector3(nextSpawnCellX + (markerLocal.x - tileOriginLocal.x), markerLocal.y, 0f);
             Vector3 spawnScale = marker.transform.localScale;
 
             // Gate on the hazard's rightmost column, not its pivot - a multi-cell
