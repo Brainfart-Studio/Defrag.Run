@@ -22,3 +22,6 @@ MonoBehaviour:
   - key: Spike
     prefab: {fileID: 7498287049124879578, guid: 1f4de65df21a60e46b1021eb8ad6e570, type: 3}
     prewarmCount: 10
+  - key: ToggleBlock
+    prefab: {fileID: 3985685841937241565, guid: 5fa645e92b5c03540bfdd26286e265d5, type: 3}
+    prewarmCount: 10
