@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6657375788966916663}
   - component: {fileID: 5853918465195306190}
   m_Layer: 0
-  m_Name: Chunk 3
+  m_Name: Test_SuperFlat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
