@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: CreditsConfig
   m_EditorClassIdentifier: 
   entries:
-  - name: Brainfart Studio
-    title: Lead Programmer
-  - name: Pikachu
-    title: Gameplay Programmer
-  - name: Charmander
-    title: Character Artist
-  - name: Squirtle
-    title: Background Artist
-  - name: Bulbasaur
-    title: Playtester
-  - name: Eevee
-    title: Playtester
+  - name: Mitchell Opitz
+    title: Programming
+  - name: Mitchell Opitz
+    title: Music
+  - name: Mitchell Opitz
+    title: Audio
+  - name: Malek elsady
+    title: Playtesting
+  - name: Keltfire
+    title: Playtesting
