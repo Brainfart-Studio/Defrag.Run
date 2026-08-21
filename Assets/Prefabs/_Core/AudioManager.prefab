@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2892575136856910304}
   - component: {fileID: 7010801775751630421}
+  - component: {fileID: 3701613266379331252}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -47,3 +48,27 @@ MonoBehaviour:
   sfxPoolSize: 8
   musicConfig: {fileID: 11400000, guid: b52eda2ae03990f47b027717c1249393, type: 2}
   volumeLerpSpeed: 0.5
+  deathFadeDuration: 1
+--- !u!114 &3701613266379331252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411221095656691626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4968a07707f7844b18ff2e2e371cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpClip: {fileID: 8300000, guid: d03d1a85cded2c0478fdeb9bacedf3d5, type: 3}
+  landClip: {fileID: 8300000, guid: d31bcda374ea7c040b2cf03125a90cf9, type: 3}
+  deathClip: {fileID: 8300000, guid: 69e647178e8c9dd44aceef1960a346f5, type: 3}
+  jumpPitchJitter: 0.05
+  minLandFallSpeed: 3
+  maxLandFallSpeed: 20
+  minLandVolume: 0.5
+  maxLandVolume: 1
+  minLandPitch: 1
+  maxLandPitch: 0.85
+  landPitchJitter: 0.05
