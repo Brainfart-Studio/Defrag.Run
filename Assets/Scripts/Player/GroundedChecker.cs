@@ -1,7 +1,10 @@
 using BFTools.Core.EventBus;
 using UnityEngine;
 
-public struct PlayerLandedEvent { }
+public struct PlayerLandedEvent
+{
+    public float FallSpeed;
+}
 
 public class GroundedChecker : MonoBehaviour
 {
@@ -30,7 +33,7 @@ public class GroundedChecker : MonoBehaviour
 
         if (IsGrounded && !wasGrounded && airborneVelocityY <= -minLandingFallSpeed)
         {
-            EventBus<PlayerLandedEvent>.Fire(new PlayerLandedEvent());
+            EventBus<PlayerLandedEvent>.Fire(new PlayerLandedEvent { FallSpeed = -airborneVelocityY });
         }
 
         if (!IsGrounded)
