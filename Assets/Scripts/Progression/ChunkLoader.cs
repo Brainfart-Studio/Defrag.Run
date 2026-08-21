@@ -56,6 +56,11 @@ public class ChunkLoader : MonoBehaviour
     [Tooltip("Uniform chunk width in cells/units")]
     [SerializeField] private int chunkWidth = 20;
 
+    // How wide a difficulty band still counts as "close enough" when weighting
+    // chunk selection - see ChunkSelector.PickWeighted. Hardcoded here until
+    // it's exposed as a tunable field.
+    private const float ChunkSelectionTolerance = 3f;
+
     private BFObjectPooler pooler;
     private readonly Queue<ActiveChunk> activeChunks = new Queue<ActiveChunk>();
     private readonly List<PendingHazard> pendingHazards = new List<PendingHazard>();
@@ -123,7 +128,7 @@ public class ChunkLoader : MonoBehaviour
 
     private void SpawnChunk()
     {
-        GameObject chunkPrefab = chunkPrefabs[UnityEngine.Random.Range(0, chunkPrefabs.Count)];
+        GameObject chunkPrefab = ChunkSelector.PickWeighted(chunkPrefabs, DifficultyManager.Instance.Difficulty, ChunkSelectionTolerance);
         Tilemap chunkTilemap = chunkPrefab.GetComponentInChildren<Tilemap>();
 
         BoundsInt sourceBounds = chunkTilemap.cellBounds;
