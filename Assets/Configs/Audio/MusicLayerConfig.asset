@@ -17,7 +17,7 @@ MonoBehaviour:
     isBase: 1
     startDifficulty: -1
     maxDifficulty: 0
-    maxVolume: 0.4
+    maxVolume: 0.5
   - clip: {fileID: 8300000, guid: 44ce046dc7877a548abdc8b7d12ad2ac, type: 3}
     isBase: 1
     startDifficulty: -1
@@ -52,4 +52,9 @@ MonoBehaviour:
     isBase: 0
     startDifficulty: 4
     maxDifficulty: 5
+    maxVolume: 1
+  - clip: {fileID: 8300000, guid: 431ac9d362b37724992d8a85a4e33474, type: 3}
+    isBase: 0
+    startDifficulty: 5
+    maxDifficulty: 6
     maxVolume: 1
