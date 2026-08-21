@@ -2,6 +2,7 @@ using BFTools.Core.EventBus;
 using UnityEngine;
 
 public struct PlayerDashedEvent { }
+public struct PlayerJumpedEvent { }
 
 public class PlayerController : MonoBehaviour
 {
@@ -113,6 +114,8 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, config.jumpForce);
         varJumpCounter = config.varJumpTime;
+
+        EventBus<PlayerJumpedEvent>.Fire(new PlayerJumpedEvent());
     }
 
     public void ConsumeJump()

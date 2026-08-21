@@ -183,13 +183,14 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat(SFXVolumeKey, SFXVolume);
     }
 
-    public void PlaySFX(AudioClip clip, float volume = 1f)
+    public void PlaySFX(AudioClip clip, float volume = 1f, float pitch = 1f)
     {
         if (clip == null) return;
 
         AudioSource source = sfxSources[nextSfxSourceIndex];
         nextSfxSourceIndex = (nextSfxSourceIndex + 1) % sfxSources.Length;
 
+        source.pitch = pitch;
         source.PlayOneShot(clip, volume * SFXVolume * MasterVolume);
     }
 }
