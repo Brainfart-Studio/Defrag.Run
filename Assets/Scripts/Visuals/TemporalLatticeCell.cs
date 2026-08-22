@@ -28,9 +28,14 @@ internal sealed class TemporalLatticeCell
 
         history = new TemporalLatticeCellState[Mathf.Max(1, config.HistoryLength)];
 
+        // Seeded directly at its resting-state color (energy/velocity/offset are
+        // all zero at construction, so that color is fully known up front)
+        // instead of starting at white and lerping toward it over the first few
+        // frames - the latter is what caused a white flash across the whole
+        // layer the instant it initialized.
         Current = new TemporalLatticeCellState
         {
-            color = Color.white,
+            color = ComputeTargetColor(0f),
             offset = Vector2.zero,
             velocity = Vector2.zero,
             energy = 0f,
@@ -97,6 +102,13 @@ internal sealed class TemporalLatticeCell
             displacementActivity * config.DisplacementColorInfluence +
             temporalActivity);
 
+        Color target = ComputeTargetColor(visualValue);
+
+        Current.color = Color.Lerp(Current.color, target, 1f - Mathf.Exp(-config.ColorResponse * dt));
+    }
+
+    private Color ComputeTargetColor(float visualValue)
+    {
         Color target;
         if (config.BaseGradient != null)
         {
@@ -110,7 +122,7 @@ internal sealed class TemporalLatticeCell
         target *= Mathf.Lerp(config.MinBrightness, config.MaxBrightness, visualValue);
         target.a = Mathf.Lerp(config.MinAlpha, config.MaxAlpha, visualValue);
 
-        Current.color = Color.Lerp(Current.color, target, 1f - Mathf.Exp(-config.ColorResponse * dt));
+        return target;
     }
 
     private TemporalLatticeCellState SampleHistory(float delay)
