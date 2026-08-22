@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BFTools.Core.EventBus;
 using BFTools.Core.ServiceLocator;
 using BFTools.Systems.ObjectPooler;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class BuildFragmentSpawner : MonoBehaviour
 
     private TileBuilder tileBuilder;
     private BFObjectPooler pooler;
+    private bool isDying;
 
     private void Awake()
     {
@@ -23,15 +25,26 @@ public class BuildFragmentSpawner : MonoBehaviour
     private void OnEnable()
     {
         tileBuilder.OnColumnBuilding += HandleColumnBuilding;
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
     }
 
     private void OnDisable()
     {
         tileBuilder.OnColumnBuilding -= HandleColumnBuilding;
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        isDying = true;
     }
 
     private void HandleColumnBuilding(IReadOnlyList<Vector3Int> cells)
     {
+        if (isDying) return;
+
         for (int i = 0; i < cells.Count; i++)
         {
             Vector3Int cell = cells[i];
@@ -54,9 +67,13 @@ public class BuildFragmentSpawner : MonoBehaviour
 
     // Called by a fragment's onComplete once its assembly animation finishes -
     // the tile only becomes visible and solid at the moment it visually looks
-    // fully assembled, not the moment the build line first reached it.
+    // fully assembled, not the moment the build line first reached it. Guarded
+    // against death so a fragment that was already mid-animation when the
+    // player died can't resurrect an already-decayed tile once it completes.
     private void RevealTile(Vector3Int cell)
     {
+        if (isDying) return;
+
         masterTilemap.SetTileFlags(cell, TileFlags.None);
         masterTilemap.SetColor(cell, Color.white);
         masterTilemap.SetColliderType(cell, restoredColliderType);

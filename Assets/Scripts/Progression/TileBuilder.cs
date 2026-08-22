@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BFTools.Core.EventBus;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -18,11 +19,28 @@ public class TileBuilder : MonoBehaviour
 
     public event Action<IReadOnlyList<Vector3Int>> OnColumnBuilding;
 
+    private void Awake()
+    {
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
+
     // TEMP: replace with OnGameStart hookup once the start line trigger exists
     private void Start()
     {
         lastProcessedColumn = masterTilemap.WorldToCell(buildLine.position).x;
         BeginBuilding();
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        isActive = false;
     }
 
     private void Update()
