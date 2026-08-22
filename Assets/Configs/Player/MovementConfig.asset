@@ -18,14 +18,14 @@ MonoBehaviour:
   gravity: -112
   maxFallSpeed: -20
   groundDrag: 8
-  jumpForce: 13
+  jumpForce: 14
   jumpBufferTime: 0.1
   coyoteTime: 0.1
-  varJumpTime: 0.2
+  varJumpTime: 0.22
   apexGravityMultiplier: 0.5
   apexThreshold: 5
   apexSpeedMultiplier: 1.2
   dashSpeed: 30
-  dashDuration: 0.15
-  dashCooldown: 0.2
+  dashDuration: 0.11
+  dashCooldown: 0.1
   maxDashes: 1
