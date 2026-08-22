@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "3764bafd-6d3e-405c-b4d6-63a0dfb4d042",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "4a696300-7628-44ad-ab91-5ae2ec9e7287",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -278,17 +296,6 @@
                 },
                 {
                     "name": "",
-                    "id": "cb50466d-e87e-4fcd-b078-f47905077113",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "32390b73-6518-404d-a64f-6d3c9f8fe50a",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -311,12 +318,23 @@
                 },
                 {
                     "name": "",
-                    "id": "7e08cfe3-3865-49a4-bb9a-738c72c019b3",
+                    "id": "68ee5a58-29c0-453d-84ef-ff8c3d9d59c9",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7011a66-6ee7-4256-bcff-aa9ce8abe4c7",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Select",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

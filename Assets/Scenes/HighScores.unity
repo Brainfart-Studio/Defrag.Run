@@ -187,11 +187,11 @@ MonoBehaviour:
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
-  m_PointAction: {fileID: 7721640412359079622, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
+  m_PointAction: {fileID: 8657317990426362038, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
   m_MoveAction: {fileID: 7721640412359079622, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
   m_SubmitAction: {fileID: 2172620970254276129, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
   m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 2172620970254276129, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
+  m_LeftClickAction: {fileID: -8104643613999879146, guid: c1e161a7f0c05a64a95f851e7f8a31e7, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
