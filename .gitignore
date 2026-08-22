@@ -108,3 +108,6 @@ InitTestScene*.unity*
 # LeaderboardCreator config (contains PlayFab secret key)
 /Assets/LeaderboardCreator/leaderboards.json
 /Assets/LeaderboardCreator/leaderboards.json.meta
+
+/Assets/Art/Fonts/HUD Labels.asset
+/Assets/Art/Shaders/TileCrumble.mat
