@@ -9,6 +9,7 @@ public class MenuInputEvents : MonoBehaviour
     private InputAction clickAction;
 
     private GameObject previousSelected;
+    private bool hasSelection;
 
     private void Awake()
     {
@@ -30,6 +31,13 @@ public class MenuInputEvents : MonoBehaviour
         if (currentSelected == previousSelected) return;
 
         previousSelected = currentSelected;
+
+        if (!hasSelection)
+        {
+            hasSelection = true;
+            return;
+        }
+
         if (currentSelected == null) return;
 
         EventBus<MenuNavigatedEvent>.Fire(new MenuNavigatedEvent { SelectedObject = currentSelected });
