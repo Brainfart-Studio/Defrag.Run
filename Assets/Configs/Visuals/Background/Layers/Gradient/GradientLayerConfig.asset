@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorGradient:
     serializedVersion: 2
-    key0: {r: 0.039, g: 0.047, b: 0.118, a: 0.039215688}
+    key0: {r: 0.14509805, g: 0.9098039, b: 1, a: 0.039215688}
     key1: {r: 1, g: 0.16862746, b: 0.8392157, a: 0.039215688}
-    key2: {r: 0.016, g: 0.024, b: 0.067, a: 0}
+    key2: {r: 0.14509805, g: 0.9098039, b: 1, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
