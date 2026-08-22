@@ -69,6 +69,7 @@ public class ChunkLoader : MonoBehaviour
     private readonly HashSet<int> decayedColumnsScratch = new HashSet<int>();
     private int nextSpawnCellX;
     private bool isActive = true;
+    private bool isDying;
 
     // Debug-only hooks - fired around chunk spawn/unload so an optional overlay
     // (chunk tint + name label for playtesting) can react without ChunkLoader
@@ -125,6 +126,7 @@ public class ChunkLoader : MonoBehaviour
         if (e.NewState != GameState.Dying) return;
 
         isActive = false;
+        isDying = true;
     }
 
     private void SpawnChunk()
@@ -233,9 +235,13 @@ public class ChunkLoader : MonoBehaviour
 
     // Hides the real hazard and plays the same assembly shader tiles use at this
     // position, revealing (and re-enabling its collider) only once that fragment
-    // finishes - identical timing rule to BuildFragmentSpawner.RevealTile.
+    // finishes - identical timing rule to BuildFragmentSpawner.RevealTile. Every
+    // reveal path is also guarded against death so a fragment already mid-animation
+    // when the player died can't resurrect an already-decayed, live hazard.
     private void BeginHazardBuild(Vector3 worldPosition, SpriteRenderer renderer, Collider2D collider)
     {
+        if (isDying) return;
+
         if (renderer == null || renderer.sprite == null)
         {
             if (collider != null) collider.enabled = true;
@@ -255,6 +261,8 @@ public class ChunkLoader : MonoBehaviour
 
         fragment.GetComponent<BuildFragmentController>().Begin(renderer.sprite, worldPosition, () =>
         {
+            if (isDying) return;
+
             renderer.enabled = true;
             if (collider != null) collider.enabled = true;
         });
