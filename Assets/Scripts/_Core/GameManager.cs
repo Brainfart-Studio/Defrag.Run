@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerDeath(PlayerDeathEvent e)
     {
+        if (CurrentState != GameState.Playing) return;
+
         EventBus<BFScreenFlashEvent>.Fire(new BFScreenFlashEvent { eventName = "Death" });
         ChangeState(GameState.Dying);
         StartCoroutine(EndDeathSequence());

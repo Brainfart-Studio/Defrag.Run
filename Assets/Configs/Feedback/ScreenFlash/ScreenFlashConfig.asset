@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - eventName: Death
-    flashColor: {r: 1, g: 0, b: 0.1, a: 1}
-    duration: 0.2
-    flashCount: 1
+    flashColor: {r: 1, g: 0.16862746, b: 0.8392157, a: 0.2509804}
+    duration: 0.025
+    flashCount: 2
