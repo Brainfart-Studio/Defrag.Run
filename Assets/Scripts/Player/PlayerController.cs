@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Movement
+    public void StopHorizontalMovement() => rb.velocity = new Vector2(0f, rb.velocity.y);
+
     public void Move(float moveInputX)
     {
         if (isDashing) return;
