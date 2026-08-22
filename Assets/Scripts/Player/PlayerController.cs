@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     private float lagRunModifier = 1f;
     private float lagFallModifier = 1f;
 
+    private Collider2D col;
+
     // Public accessors
     public Rigidbody2D GetRigidbody() => rb;
     public PlayerInputHandler GetInputHandler() => inputHandler;
@@ -36,7 +38,22 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
+        col = GetComponent<Collider2D>();
         dashesRemaining = config.maxDashes;
+
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        col.enabled = false;
     }
 
     private void FixedUpdate()
