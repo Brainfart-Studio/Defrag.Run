@@ -1,3 +1,4 @@
+using BFTools.Core.EventBus;
 using UnityEngine;
 
 [RequireComponent(typeof(LaserCore))]
@@ -11,6 +12,7 @@ public class PulseLaser : MonoBehaviour
     private float timer;
     private float delayTimer;
     private bool isLaserOn;
+    private bool isDead;
 
     private void Awake()
     {
@@ -23,10 +25,26 @@ public class PulseLaser : MonoBehaviour
     private void OnEnable()
     {
         ResumeFromStart();
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        isDead = true;
+        laserCore.ToggleLaser(false);
     }
 
     private void Update()
     {
+        if (isDead) return;
+
         if (delayTimer > 0f)
         {
             delayTimer -= Time.deltaTime;
@@ -60,6 +78,7 @@ public class PulseLaser : MonoBehaviour
         delayTimer = startDelay;
         timer = 0f;
         isLaserOn = false;
+        isDead = false;
         laserCore.ToggleLaser(false);
         enabled = true;
     }
