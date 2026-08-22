@@ -9,7 +9,6 @@ public enum GameState
     Playing,
     Paused,
     Dying,
-    HighScore,
     GameOver
 }
 
@@ -95,16 +94,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator EndDeathSequence()
     {
         yield return new WaitForSeconds(deathSequenceDuration);
-        ChangeState(GameState.HighScore);
-    }
-
-    /// <summary>
-    /// Called once score submission (or skip) is complete, moving from the HighScore state to GameOver.
-    /// </summary>
-    public void CompleteHighScore()
-    {
-        if (CurrentState != GameState.HighScore) return;
-
         ChangeState(GameState.GameOver);
     }
 
