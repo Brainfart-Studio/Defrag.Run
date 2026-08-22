@@ -33,6 +33,19 @@ public class LaserCore : MonoBehaviour
     private void OnEnable()
     {
         currentDirection = Vector3.zero;
+        EventBus<GameStateChangedEvent>.Subscribe(OnGameStateChanged);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<GameStateChangedEvent>.Unsubscribe(OnGameStateChanged);
+    }
+
+    private void OnGameStateChanged(GameStateChangedEvent e)
+    {
+        if (e.NewState != GameState.Dying) return;
+
+        ToggleLaser(false);
     }
 
     private void Update()
