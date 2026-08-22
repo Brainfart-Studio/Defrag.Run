@@ -3,7 +3,6 @@ using UnityEngine;
 
 public struct PlayerLandedEvent
 {
-    public float FallSpeed;
 }
 
 public class GroundedChecker : MonoBehaviour
@@ -14,12 +13,12 @@ public class GroundedChecker : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private Vector2 groundCheckOffset = new Vector2(0, -0.5f);
 
-    [Tooltip("Minimum downward speed (before landing) required to fire a landing event. Filters out trivial hops/ledge steps")]
-    [SerializeField] private float minLandingFallSpeed = 3f;
+    [Tooltip("Minimum distance fallen (peak height to landing height) required to fire a landing event. Filters out trivial hops/ledge steps")]
+    [SerializeField] private float minLandingFallDistance = 5f;
 
     private Rigidbody2D rb;
     private bool wasGrounded;
-    private float airborneVelocityY;
+    private float peakHeightY;
 
     private void Awake()
     {
@@ -31,14 +30,18 @@ public class GroundedChecker : MonoBehaviour
         Vector2 checkPosition = (Vector2)transform.position + groundCheckOffset;
         IsGrounded = Physics2D.OverlapCircle(checkPosition, groundCheckRadius, groundLayer);
 
-        if (IsGrounded && !wasGrounded && airborneVelocityY <= -minLandingFallSpeed)
+        if (IsGrounded && !wasGrounded && peakHeightY - transform.position.y >= minLandingFallDistance)
         {
-            EventBus<PlayerLandedEvent>.Fire(new PlayerLandedEvent { FallSpeed = -airborneVelocityY });
+            EventBus<PlayerLandedEvent>.Fire(new PlayerLandedEvent());
         }
 
         if (!IsGrounded)
         {
-            airborneVelocityY = rb.velocity.y;
+            peakHeightY = Mathf.Max(peakHeightY, transform.position.y);
+        }
+        else
+        {
+            peakHeightY = transform.position.y;
         }
 
         wasGrounded = IsGrounded;
