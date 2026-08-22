@@ -133,6 +133,8 @@ GameObject:
   - component: {fileID: 47958054}
   - component: {fileID: 47958053}
   - component: {fileID: 47958055}
+  - component: {fileID: 47958057}
+  - component: {fileID: 47958056}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -200,6 +202,32 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!114 &47958056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47958051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0b93150813ce9449defb0140db343b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigateClip: {fileID: 8300000, guid: 3e841d8738907684099a9f4324cca290, type: 3}
+  selectClip: {fileID: 8300000, guid: a0dc9f3463ad59c4ab8c98dccd366077, type: 3}
+--- !u!114 &47958057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47958051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a7b22de9cef2c4e967deb782fcd17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &55853986
 GameObject:
   m_ObjectHideFlags: 0
