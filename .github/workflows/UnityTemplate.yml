@@ -1,0 +1,78 @@
+name: GameCI Template 🎮
+on:
+  push:
+    branches:
+      - main
+      - development
+      - feat/cicd
+permissions:
+  contents: write
+jobs:         
+ buildWebGL:
+   name: Build for WebGL 🖥️
+   runs-on: ubuntu-latest
+   strategy:
+     fail-fast: false
+   steps:
+     - name: Checkout repository
+       uses: actions/checkout@v4
+     - name: Free disk space
+       uses: jlumbroso/free-disk-space@main
+       with:
+         tool-cache: false
+         android: true
+         dotnet: true
+         haskell: true
+         large-packages: true
+         swap-storage: true
+     - name: Create LFS file list
+       run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+     - name: Restore LFS cache
+       uses: actions/cache@v4
+       id: lfs-cache
+       with:
+         path: .git/lfs
+         key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+     - name: Git LFS Pull
+       run: |
+         git lfs pull
+         git add .
+         git reset --hard
+     - name: Restore Library cache
+       uses: actions/cache@v4
+       with:
+         path: Library
+         key: Library-build-WebGL
+         restore-keys: |
+           Library-build-
+           Library-
+     - name: Build project
+       uses: game-ci/unity-builder@v4
+       env:
+         UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+       with:
+         targetPlatform: WebGL
+     - uses: actions/upload-artifact@v4
+       with:
+         name: build-WebGL
+         path: build/WebGL
+         
+ deployItch:
+   needs: buildWebGL
+   name: Deploy to Itch.io 🚀
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/download-artifact@v4
+       with:
+         name: build-WebGL
+         path: build/WebGL
+     - name: Publish to Itch.io
+       uses: KikimoraGames/itch-publish@v0.0.3
+       with:
+         butlerApiKey: ${{ secrets.ITCH_IO_API_KEY }}
+         gameData: build/WebGL
+         itchUsername: ${{ secrets.ITCH_USER }}
+         itchGameId: ${{ secrets.ITCH_GAME }}
+         buildChannel: HTML

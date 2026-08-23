@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7461708192445757063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8955868257280072922}
+  - component: {fileID: 6908754236129344490}
+  - component: {fileID: 8624830327215930087}
+  - component: {fileID: -161700180375729168}
+  m_Layer: 0
+  m_Name: TileDecay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8955868257280072922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7461708192445757063}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6908754236129344490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7461708192445757063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07fc7854a02ae540a6de27b6a317ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decayLine: {fileID: 0}
+  masterTilemap: {fileID: 0}
+  rowRangeMin: -15
+  rowRangeMax: 15
+--- !u!114 &8624830327215930087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7461708192445757063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445ac801726aeec49aa7bbde784b71f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterTilemap: {fileID: 0}
+--- !u!114 &-161700180375729168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7461708192445757063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68e3baec00b5aa42826a253f8119691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraScroller: {fileID: 0}
+  crumbleMaterial: {fileID: 2100000, guid: 31cf3e3e1774d11498d2572453ccb3be, type: 2}
+  driftScale: 1

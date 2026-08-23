@@ -104,3 +104,10 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# LeaderboardCreator config (contains PlayFab secret key)
+/Assets/LeaderboardCreator/leaderboards.json
+/Assets/LeaderboardCreator/leaderboards.json.meta
+
+/Assets/Art/Fonts/HUD Labels.asset
+/Assets/Art/Shaders/TileCrumble.mat

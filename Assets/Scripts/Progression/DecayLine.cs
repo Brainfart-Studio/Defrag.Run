@@ -1,0 +1,66 @@
+using BFTools.Core.EventBus;
+using UnityEngine;
+
+public class DecayLine : MonoBehaviour
+{
+    [Tooltip("Decay line scroll speed with zero difficulty")]
+    [SerializeField] private float baseSpeed = 3f;
+
+    [Tooltip("Additional scroll speed per point of difficulty. Keep slightly higher than the camera's multiplier so the safe zone shrinks over time")]
+    [SerializeField] private float difficultySpeedMultiplier = 1.01f;
+
+    [Tooltip("Speed cap. Once reached, stops scaling with difficulty and holds this speed")]
+    [SerializeField] private float maxSpeed = 10f;
+
+    private bool isActive;
+    private bool isScaling = true;
+    private float currentSpeed;
+
+    private void Awake()
+    {
+        EventBus<GameStartEvent>.Subscribe(OnGameStart);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus<GameStartEvent>.Unsubscribe(OnGameStart);
+    }
+
+    private void Update()
+    {
+        if (!isActive) return;
+
+        if (isScaling)
+        {
+            currentSpeed = CalculateScrollSpeed(DifficultyManager.Instance.Difficulty);
+            if (currentSpeed >= maxSpeed)
+            {
+                currentSpeed = maxSpeed;
+                isScaling = false;
+            }
+        }
+
+        transform.position += Vector3.right * currentSpeed * Time.deltaTime;
+    }
+
+    private void OnGameStart(GameStartEvent e)
+    {
+        BeginScrolling();
+    }
+
+    private float CalculateScrollSpeed(float difficulty)
+    {
+        return baseSpeed + difficulty * difficultySpeedMultiplier;
+    }
+
+    public void BeginScrolling()
+    {
+        isActive = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(transform.position + Vector3.up * 10f, transform.position + Vector3.down * 10f);
+    }
+}
