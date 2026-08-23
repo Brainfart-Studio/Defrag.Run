@@ -58,29 +58,29 @@ MonoBehaviour:
   temporalEnergyFeedback: 0.5
   energyPropagation: 4
   energyDecay: 5
-  continuousWaveStrength: 0.68
-  cellOscillationSpeed: 8
-  impulseStrength: 0.69
-  impulseInterval: 1.44
+  continuousWaveStrength: 0.07
+  cellOscillationSpeed: 1.23
+  impulseStrength: 0.82
+  impulseInterval: 0.6
   impulseRadius: 0.077
   impulseVariation: 1
   playerTag: Player
   playerInteractionRadius: 0.062
   playerPushStrength: 30
-  playerEnergyInjection: 1.33
-  responseSpeed: 10
-  damping: 3.77
-  neighborSpring: 6.23
-  neighborVelocityInfluence: 8
-  maxVelocity: 50
-  maxOffset: 50
-  offsetReturn: 1.83
-  energyDisplacement: 10.82
-  energyColorInfluence: 1
-  velocityColorInfluence: 1
-  displacementColorInfluence: 1
-  temporalColorInfluence: 7
-  colorResponse: 15
-  energyScale: 1
-  velocityScale: 1
-  rotationAmount: 63.2
+  playerEnergyInjection: 2.64
+  responseSpeed: 5.38
+  damping: 2.68
+  neighborSpring: 6.92
+  neighborVelocityInfluence: 1.5
+  maxVelocity: 23.6
+  maxOffset: 18
+  offsetReturn: 2.55
+  energyDisplacement: 2.5
+  energyColorInfluence: 5
+  velocityColorInfluence: 5
+  displacementColorInfluence: 5
+  temporalColorInfluence: 10
+  colorResponse: 6.16
+  energyScale: 0.319
+  velocityScale: 0.401
+  rotationAmount: 9.9
