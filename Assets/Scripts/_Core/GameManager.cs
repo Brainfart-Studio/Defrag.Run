@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Playing;
 
-    private InputAction gameplayPauseAction;
-    private InputAction menuPauseAction;
+    private InputAction pauseAction;
 
     private void Awake()
     {
@@ -41,17 +40,14 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.EnableGameplay();
         EventBus<PlayerDeathEvent>.Subscribe(OnPlayerDeath);
 
-        gameplayPauseAction = InputManager.Instance.GetGameplayAction("Pause");
-        menuPauseAction = InputManager.Instance.GetMenuAction("Pause");
-        gameplayPauseAction.performed += OnPausePerformed;
-        menuPauseAction.performed += OnPausePerformed;
+        pauseAction = InputManager.Instance.GetSystemAction("Pause");
+        pauseAction.performed += OnPausePerformed;
     }
 
     private void OnDestroy()
     {
         EventBus<PlayerDeathEvent>.Unsubscribe(OnPlayerDeath);
-        gameplayPauseAction.performed -= OnPausePerformed;
-        menuPauseAction.performed -= OnPausePerformed;
+        pauseAction.performed -= OnPausePerformed;
     }
 
     private void OnPausePerformed(InputAction.CallbackContext ctx)

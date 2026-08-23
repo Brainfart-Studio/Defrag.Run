@@ -10,15 +10,9 @@ public class PlayerAudioFeedback : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpPitchJitter = 0.05f;
 
-    [Header("Landing Variation")]
-    [Tooltip("Fall speed at/below this maps to the quietest, highest-pitched landing")]
-    [SerializeField] private float minLandFallSpeed = 3f;
-    [Tooltip("Fall speed at/above this maps to the loudest, lowest-pitched landing")]
-    [SerializeField] private float maxLandFallSpeed = 20f;
-    [SerializeField] private float minLandVolume = 0.5f;
-    [SerializeField] private float maxLandVolume = 1f;
-    [SerializeField] private float minLandPitch = 1f;
-    [SerializeField] private float maxLandPitch = 0.85f;
+    [Header("Landing")]
+    [SerializeField] private float landVolume = 1f;
+    [SerializeField] private float landPitch = 1f;
     [SerializeField] private float landPitchJitter = 0.05f;
 
     private void OnEnable()
@@ -43,11 +37,8 @@ public class PlayerAudioFeedback : MonoBehaviour
 
     private void OnPlayerLanded(PlayerLandedEvent e)
     {
-        float t = Mathf.InverseLerp(minLandFallSpeed, maxLandFallSpeed, e.FallSpeed);
-        float volume = Mathf.Lerp(minLandVolume, maxLandVolume, t);
-        float pitch = Mathf.Lerp(minLandPitch, maxLandPitch, t) + Random.Range(-landPitchJitter, landPitchJitter);
-
-        AudioManager.Instance.PlaySFX(landClip, volume, pitch);
+        float pitch = landPitch + Random.Range(-landPitchJitter, landPitchJitter);
+        AudioManager.Instance.PlaySFX(landClip, landVolume, pitch);
     }
 
     private void OnPlayerDeath(PlayerDeathEvent e)

@@ -11,8 +11,8 @@ public static class ChunkTileSwapper
 {
     // Edit these two names to swap a different pair later - matched exactly
     // against the tile asset's file name (without extension).
-    private const string SourceTileName = "TemplateRuleTile";
-    private const string TargetTileName = "New Rule Tile";
+    private const string SourceTileName = "SingleRuleTile";
+    private const string TargetTileName = "DoubleRuleTile";
 
     [MenuItem("Tools/Chunks/Swap Tile In All Chunk Prefabs")]
     private static void SwapTileInAllChunkPrefabs()

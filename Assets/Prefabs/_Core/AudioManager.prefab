@@ -65,10 +65,6 @@ MonoBehaviour:
   landClip: {fileID: 8300000, guid: d31bcda374ea7c040b2cf03125a90cf9, type: 3}
   deathClip: {fileID: 8300000, guid: 69e647178e8c9dd44aceef1960a346f5, type: 3}
   jumpPitchJitter: 0.05
-  minLandFallSpeed: 3
-  maxLandFallSpeed: 20
-  minLandVolume: 0.5
-  maxLandVolume: 1
-  minLandPitch: 1
-  maxLandPitch: 0.85
+  landVolume: 0.25
+  landPitch: 1
   landPitchJitter: 0.05

@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 48
   rows: 32
-  cellGap: 0.081
+  cellGap: 0.087
   baseGradient:
     serializedVersion: 2
     key0: {r: 0.039215688, g: 0.039215688, b: 0.05882353, a: 1}
-    key1: {r: 0.0627451, g: 0.0627451, b: 0.14117648, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 1, g: 0.9538098, b: 0, a: 1}
+    key2: {r: 1, g: 0, b: 0.7748437, a: 0}
+    key3: {r: 0.14509805, g: 0.9098039, b: 1, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
+    ctime1: 17540
+    ctime2: 53585
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -43,12 +43,12 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 2
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   gradientBasePosition: 0
   gradientEnergyPosition: 1
   minBrightness: 0.15
-  maxBrightness: 1.32
+  maxBrightness: 0.285
   minAlpha: 0.104
   maxAlpha: 0.324
   historyLength: 30
@@ -58,29 +58,29 @@ MonoBehaviour:
   temporalEnergyFeedback: 2
   energyPropagation: 4
   energyDecay: 3
-  continuousWaveStrength: 0.07
-  cellOscillationSpeed: 1.23
-  impulseStrength: 0.82
-  impulseInterval: 0.6
+  continuousWaveStrength: 0.68
+  cellOscillationSpeed: 8
+  impulseStrength: 0.69
+  impulseInterval: 1.44
   impulseRadius: 0.077
   impulseVariation: 1
   playerTag: Player
-  playerInteractionRadius: 0.136
+  playerInteractionRadius: 0.062
   playerPushStrength: 30
-  playerEnergyInjection: 2.64
-  responseSpeed: 5.38
-  damping: 2.68
-  neighborSpring: 6.92
-  neighborVelocityInfluence: 1.5
-  maxVelocity: 23.6
-  maxOffset: 18
-  offsetReturn: 2.55
-  energyDisplacement: 2.5
+  playerEnergyInjection: 1.33
+  responseSpeed: 10
+  damping: 3.77
+  neighborSpring: 6.23
+  neighborVelocityInfluence: 8
+  maxVelocity: 50
+  maxOffset: 50
+  offsetReturn: 1.83
+  energyDisplacement: 10.82
   energyColorInfluence: 5
   velocityColorInfluence: 5
   displacementColorInfluence: 5
   temporalColorInfluence: 10
-  colorResponse: 6.16
-  energyScale: 0.319
-  velocityScale: 0.401
-  rotationAmount: 9.9
+  colorResponse: 15
+  energyScale: 1
+  velocityScale: 1
+  rotationAmount: 63.2

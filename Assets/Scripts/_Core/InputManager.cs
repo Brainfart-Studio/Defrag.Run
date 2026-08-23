@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 
     private InputActionMap gameplayMap;
     private InputActionMap menuMap;
+    private InputActionMap systemMap;
 
     private void Awake()
     {
@@ -23,8 +24,10 @@ public class InputManager : MonoBehaviour
 
         gameplayMap = inputActions.FindActionMap("Gameplay");
         menuMap = inputActions.FindActionMap("Menu");
+        systemMap = inputActions.FindActionMap("System");
 
         gameplayMap.Enable();
+        systemMap.Enable();
     }
 
     public void EnableGameplay()
@@ -49,5 +52,10 @@ public class InputManager : MonoBehaviour
     public InputAction GetMenuAction(string actionName)
     {
         return menuMap.FindAction(actionName);
+    }
+
+    public InputAction GetSystemAction(string actionName)
+    {
+        return systemMap.FindAction(actionName);
     }
 }
