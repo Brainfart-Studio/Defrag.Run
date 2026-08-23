@@ -3449,6 +3449,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1262351483346746842, guid: 1f4de65df21a60e46b1021eb8ad6e570, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262351483346746842, guid: 1f4de65df21a60e46b1021eb8ad6e570, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7498287049124879578, guid: 1f4de65df21a60e46b1021eb8ad6e570, type: 3}
       propertyPath: m_Name
       value: Spike
