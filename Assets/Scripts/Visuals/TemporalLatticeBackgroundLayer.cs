@@ -34,6 +34,17 @@ public class TemporalLatticeBackgroundLayer : IBFBackgroundLayer
     private float nextImpulseTime;
     private Vector2 impulsePosition;
 
+    // Caps the per-tick step fed into the simulation. Browsers (WebGL) can
+    // report large, uneven Time.deltaTime spikes - e.g. a loading/shader-
+    // compile stall reported as one big first frame - that a stable-framerate
+    // Editor session never sees. Without this clamp, a single oversized dt
+    // pushes the feedback terms in TemporalLatticeCell.Tick far past their
+    // normal per-frame range in one step, saturating energy (and therefore
+    // color) to the top of the gradient instantly instead of easing through
+    // it the way smaller, regular steps do. Clamping just spreads a big
+    // hitch across more (smaller) steps, matching in-Editor behavior.
+    private const float MaxDeltaTime = 0.05f;
+
     public TemporalLatticeBackgroundLayer(TemporalLatticeLayerConfig config)
     {
         this.config = config;
@@ -60,6 +71,7 @@ public class TemporalLatticeBackgroundLayer : IBFBackgroundLayer
     {
         if (root == null) return;
 
+        dt = Mathf.Min(dt, MaxDeltaTime);
         elapsed += dt;
 
         if (NeedsRebuild()) Rebuild(0);
