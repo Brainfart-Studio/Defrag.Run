@@ -55,9 +55,9 @@ MonoBehaviour:
   historyDelay: 1
   temporalNonlinearity: 0
   temporalFeedback: 0
-  temporalEnergyFeedback: 2
+  temporalEnergyFeedback: 0.5
   energyPropagation: 4
-  energyDecay: 3
+  energyDecay: 5
   continuousWaveStrength: 0.68
   cellOscillationSpeed: 8
   impulseStrength: 0.69
@@ -76,10 +76,10 @@ MonoBehaviour:
   maxOffset: 50
   offsetReturn: 1.83
   energyDisplacement: 10.82
-  energyColorInfluence: 5
-  velocityColorInfluence: 5
-  displacementColorInfluence: 5
-  temporalColorInfluence: 10
+  energyColorInfluence: 1
+  velocityColorInfluence: 1
+  displacementColorInfluence: 1
+  temporalColorInfluence: 7
   colorResponse: 15
   energyScale: 1
   velocityScale: 1
