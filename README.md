@@ -4,9 +4,6 @@
 
 A fast-paced glitchcore endless runner. Every second the ground behind you gets deleted. Dash, jump, and stay ahead of the decay tearing the digital world apart.
 
-<!-- Drop a gif or screenshot here before publishing -->
-<!-- ![Defrag.Run() gameplay](docs/gameplay.gif) -->
-
 [![Play on itch.io](https://img.itch.zone/aW1nLzI5NDYzMzk5LnBuZw==/180x143%23c/bCp%2FWF.png)](https://brainfartstudio.itch.io/defragrun)
 
 ---
